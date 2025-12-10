@@ -1,0 +1,5 @@
+streamlit
+pillow
+cryptography
+opencv-python-headless
+numpy
