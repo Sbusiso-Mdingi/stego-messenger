@@ -1,0 +1,5 @@
+{
+  "salt": "6xnJQN4WzBhpyu95Xz25tg==",
+  "iterations": 390000,
+  "kdf": "PBKDF2-HMAC-SHA256"
+}
