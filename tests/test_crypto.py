@@ -1,7 +1,12 @@
-from cryptography.exceptions import InvalidTag
 import pytest
+from cryptography.exceptions import InvalidTag
 
-from src.crypto_utils import decrypt_message, derive_key_from_password, encrypt_message, generate_salt
+from src.crypto_utils import (
+    decrypt_message,
+    derive_key_from_password,
+    encrypt_message,
+    generate_salt,
+)
 
 
 def test_encrypt_decrypt_roundtrip():

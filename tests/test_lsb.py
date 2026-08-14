@@ -1,6 +1,6 @@
 import numpy as np
-from PIL import Image
 import pytest
+from PIL import Image
 
 from src.lsb_stego import capacity_bytes, embed_data, extract_data
 

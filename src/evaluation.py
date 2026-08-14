@@ -6,8 +6,8 @@
 from __future__ import annotations
 
 import math
+from collections.abc import Callable
 from pathlib import Path
-from typing import Callable
 
 import cv2
 import numpy as np
@@ -95,7 +95,7 @@ def evaluate_attacks(
             success = recovered == expected_payload
             ber = bit_error_rate(expected_payload, recovered)
             error = None
-        except Exception as exc:
+        except ValueError as exc:
             success = False
             ber = 1.0
             error = str(exc)
