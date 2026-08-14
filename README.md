@@ -1,178 +1,108 @@
-# Secure Steganographic Messenger
+# Stego Messenger
 
-A covert communication system that combines modern authenticated encryption with image-based steganography to enable hidden, end-to-end secure messaging. This project focuses on concealing both **message content** and the **existence of communication**, demonstrating real-world covert channel techniques used in advanced cybersecurity systems.
+**An open-source research toolkit for evaluating encrypted image steganography.**
 
----
+Stego Messenger combines authenticated encryption, a simple LSB embedding baseline, deterministic image transformations, and reproducible evaluation metrics. The project's differentiator is not a claim that messages are undetectable or transformation-resistant; it is a framework for **measuring** capacity, distortion, recovery, and simple LSB statistics under explicit experimental conditions.
 
-## 🚀 Project Overview
+> **Status:** experimental research software. Not a production secure-messaging service and not a guarantee of covert or undetectable communication.
 
-Traditional secure messaging protects the *content* of communication, but not the *presence* of communication itself.  
-This project explores how to build a system that hides encrypted messages inside ordinary-looking media to enable private, covert communication.
+## What v0.2 implements
 
-The system integrates:
+- AES-256-GCM authenticated encryption.
+- scrypt password-based key derivation.
+- Length-prefixed LSB embedding into lossless PNG output.
+- Capacity validation before embedding.
+- Deterministic JPEG, Gaussian-noise, centre-crop, and resize transformations.
+- MSE, PSNR, bit-error rate (BER), payload capacity utilisation, and LSB-plane diagnostics.
+- Automated tests and GitHub Actions CI.
 
-- Strong cryptography
-- Secure key derivation
-- Steganographic embedding
-- Adversarial robustness testing
+## What it does **not** currently implement
 
-It serves as both a learning project and a practical demonstration of applied cryptography and information hiding.
+- DCT or DWT embedding.
+- Error-correcting codes.
+- A calibrated steganalysis classifier.
+- Guaranteed survival under lossy transformations.
+- Network transport, covert command-and-control, or a production messaging protocol.
 
----
+Those distinctions are deliberate: measured results and implemented features should be clearly separated from planned research.
 
-## 🧠 Security Objectives
+## Evaluation-first workflow
 
-This project is designed around the following security goals:
+1. Select a cover image and payload.
+2. Encrypt the payload with AES-GCM using a scrypt-derived key.
+3. Embed the ciphertext using the baseline LSB method.
+4. Verify exact round-trip recovery.
+5. Measure distortion and capacity utilisation.
+6. Apply controlled transformations.
+7. Record recovery success and BER instead of assuming robustness.
+8. Compare transparent LSB diagnostics between cover and stego images.
 
-- **Confidentiality** – Message contents are protected using authenticated encryption.
-- **Stealth** – Messages are hidden inside innocent-looking carrier images.
-- **Integrity** – Encrypted payloads are authenticated to prevent tampering.
-- **Robustness** – Embedded messages survive common transformations such as compression and resizing.
-- **Resistance to Passive Surveillance** – Designed to obscure both data and communication patterns.
+See [`ROADMAP.md`](ROADMAP.md) for the planned benchmark corpus, SSIM, transform-domain baselines, error correction, and calibrated detection experiments.
 
----
+## Installation
 
-## 🔐 Cryptography
+```bash
+python -m venv .venv
+source .venv/bin/activate  # Windows: .venv\\Scripts\\activate
+pip install -e '.[dev]'
+```
 
-The system uses modern, secure cryptographic primitives:
+For the Streamlit UI:
 
-| Component | Algorithm |
-|-----------|------------|
-| Symmetric Encryption | AES-GCM / Fernet (Authenticated Encryption) |
-| Key Derivation | PBKDF2 |
-| Integrity | Built-in via AEAD (Authenticated Encryption with Associated Data) |
+```bash
+pip install -e '.[ui]'
+streamlit run ui/app.py
+```
 
-All cryptographic operations are performed **before** steganographic embedding.
+## Minimal Python example
 
----
+```python
+from src.crypto_utils import generate_salt, derive_key_from_password, encrypt_message
+from src.lsb_stego import embed_data
 
-## 🖼 Steganography Techniques
+salt = generate_salt()
+key = derive_key_from_password("research-passphrase", salt)
+payload = encrypt_message("example", key)
+embed_data("cover.png", payload, "stego.png")
+```
 
-Multiple embedding techniques are supported:
+## Reproducible evaluation
 
-- **LSB (Least Significant Bit) embedding** – High-capacity, simple technique.
-- **DCT (Discrete Cosine Transform) embedding** – Robust against compression and resizing.
-- (Planned) **DWT (Discrete Wavelet Transform)** – For multi-scale robustness.
+```python
+from src.evaluation import evaluate_embedding, evaluate_attacks
 
-Each method can be evaluated against common attack simulations.
+result = evaluate_embedding("cover.png", b"payload", "stego.png")
+attacks = evaluate_attacks("stego.png", b"payload", "benchmark-output")
+```
 
----
+The current LSB diagnostics are descriptive heuristics, **not probabilities of hidden data** and not a substitute for validated steganalysis.
 
-## ⚔️ Attack Simulation
+## Development
 
-The system includes tools to test the robustness of hidden messages against real-world transformations:
+```bash
+ruff check src tests
+pytest -q
+```
 
-- JPEG compression
-- Image resizing and rescaling
-- Cropping
-- Additive noise
-- Colour depth reduction
+Contributions should include reproducible parameters and tests. See [`CONTRIBUTING.md`](CONTRIBUTING.md), [`SECURITY.md`](SECURITY.md), and [`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md).
 
-A recovery success rate is calculated after each simulated attack.
+## Project structure
 
----
+```text
+src/                  cryptography, embedding, attacks, diagnostics, evaluation
+ui/                   Streamlit demonstration UI
+tests/                automated test suite
+.github/workflows/     continuous integration
+docs/releases/         versioned release notes
+ROADMAP.md             planned research milestones
+```
 
-## 🧩 System Architecture
+## Security and ethics
 
-High-level pipeline:
+The repository is scoped to offline image-steganography research, defensive evaluation, and reproducibility. It is not intended for malware delivery, credential theft, covert persistence, command-and-control, or operational surveillance evasion. Review the threat model and security policy before interpreting results.
 
-Plaintext message → Key derivation (PBKDF2) → Authenticated encryption (AES-GCM) → Steganographic embedding (LSB / DCT) → Stego-image generation
+## Licence
 
-Extraction follows the reverse process.
+Copyright 2026 Sbusiso Mdingi.
 
----
-
-## 🖥️ Features
-
-- End-to-end encrypted hidden messaging
-- Multiple steganography algorithms
-- Screenshot and compression resilience
-- Attack testing framework
-- Interactive user interface
-- Forensic-style extraction with confidence scoring
-
----
-
-## 🧪 Threat Model
-
-This project assumes:
-
-- Adversaries can observe all transmitted media
-- Adversaries may apply common image transformations
-- Adversaries cannot break modern cryptography
-- Adversaries do not have access to secret embedding keys
-
-A full threat model is available in `threat_model.md`.
-
----
-
-## 📊 Limitations
-
-This system is a research and educational implementation and does **not** claim absolute resistance against advanced, targeted steganalysis or nation-state adversaries.
-
-Trade-offs exist between:
-- Payload capacity
-- Invisibility
-- Robustness
-
-These trade-offs are explored and documented within the project.
-
----
-
-## 🧰 Tech Stack
-
-- Python
-- NumPy
-- OpenCV
-- Pillow
-- Cryptography (Fernet / AES-GCM)
-- Streamlit (UI)
-
----
-
-## 📁 Project Structure
-
-stego-messenger/
-├── src/
-│   ├── __init__.py
-│   ├── lsb_stego.py
-│   ├── dct_stego.py
-│   ├── crypto_utils.py
-│   ├── metadata.py
-│   ├── attacks.py
-│   ├── steganalysis.py
-│   └── tests/
-├── ui/
-│   └── app.py
-├── README.md
-├── architecture.md
-├── threat_model.md
-├── security_controls.md
-├── evaluation_metrics.md
-└── requirements.txt
-
----
-
-## 🧪 Future Work
-
-Planned enhancements:
-
-- Add Reed–Solomon error correction
-- Integrate Argon2 as KDF
-- Add KMS support
-- More robust DCT embedding
-- Forensic report signing
-
----
-
-## ⚠️ Disclaimer
-
-This project is intended for educational and research purposes only.  
-Users are responsible for complying with applicable laws and regulations regarding encryption and data hiding technologies.
-
----
-
-## 👨‍💻 Author
-
-**Sbusiso Mdingi** 
-
+Licensed under the **Apache License 2.0**. See [`LICENSE`](LICENSE) and [`NOTICE`](NOTICE).

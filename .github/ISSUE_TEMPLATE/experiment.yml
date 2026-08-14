@@ -1,0 +1,23 @@
+name: Experiment proposal
+description: Propose a reproducible evaluation or research extension
+title: "[experiment] "
+body:
+  - type: textarea
+    id: question
+    attributes:
+      label: Research question
+    validations:
+      required: true
+  - type: textarea
+    id: protocol
+    attributes:
+      label: Proposed protocol
+      description: Specify datasets, metrics, parameters, seeds, and expected outputs.
+    validations:
+      required: true
+  - type: textarea
+    id: value
+    attributes:
+      label: Why this belongs in the project
+    validations:
+      required: true

@@ -1,44 +1,66 @@
-from PIL import Image
+# Copyright 2026 Sbusiso Mdingi
+# SPDX-License-Identifier: Apache-2.0
+
+"""Length-prefixed least-significant-bit image steganography."""
+
+from __future__ import annotations
+
+from pathlib import Path
+
 import numpy as np
+from PIL import Image
 
-DELIMITER = "#####END#####"  
+HEADER_BYTES = 4
 
-def bytes_to_binary(data: bytes) -> str:
-    return ''.join(format(byte, '08b') for byte in data)
 
-def binary_to_bytes(binary: str) -> bytes:
-    return bytes(int(binary[i:i+8], 2) for i in range(0, len(binary), 8))
+def _load_rgb(path: str | Path) -> np.ndarray:
+    with Image.open(path) as image:
+        return np.asarray(image.convert("RGB"), dtype=np.uint8).copy()
 
-def embed_data(image_path: str, data: bytes, output_path: str):
-    img = Image.open(image_path)
-    arr = np.array(img)
 
-    binary_message = bytes_to_binary(data + DELIMITER.encode())
-    flat = arr.flatten()
+def capacity_bytes(image_path: str | Path) -> int:
+    """Return maximum payload bytes after the 32-bit length header."""
+    arr = _load_rgb(image_path)
+    return max(0, arr.size // 8 - HEADER_BYTES)
 
-    if len(binary_message) > len(flat):
-        raise ValueError("Payload too large for this image")
 
-    for i, bit in enumerate(binary_message):
-        flat[i] = (flat[i] & 0b11111110) | int(bit)
+def _bytes_to_bits(data: bytes) -> np.ndarray:
+    return np.unpackbits(np.frombuffer(data, dtype=np.uint8))
 
-    stego = flat.reshape(arr.shape)
-    Image.fromarray(stego).save(output_path)
 
-def extract_data(image_path: str) -> bytes:
-    img = Image.open(image_path)
-    arr = np.array(img)
-    flat = arr.flatten()
+def _bits_to_bytes(bits: np.ndarray) -> bytes:
+    usable = bits[: (len(bits) // 8) * 8]
+    return np.packbits(usable).tobytes()
 
-    bits = [str(p & 1) for p in flat]
-    bit_string = ''.join(bits)
 
-    raw_bytes = binary_to_bytes(bit_string)
+def embed_data(image_path: str | Path, data: bytes, output_path: str | Path) -> None:
+    """Embed bytes in RGB channel LSBs and write a lossless PNG."""
+    max_capacity = capacity_bytes(image_path)
+    if len(data) > max_capacity:
+        raise ValueError(f"payload is {len(data)} bytes but image capacity is {max_capacity} bytes")
 
-    delimiter = DELIMITER.encode()
-    end = raw_bytes.find(delimiter)
+    arr = _load_rgb(image_path)
+    framed = len(data).to_bytes(HEADER_BYTES, "big") + data
+    bits = _bytes_to_bits(framed)
+    flat = arr.reshape(-1)
+    flat[: len(bits)] = (flat[: len(bits)] & 0xFE) | bits
+    Image.fromarray(arr, mode="RGB").save(output_path, format="PNG")
 
-    if end == -1:
-        raise ValueError("No hidden data found")
 
-    return raw_bytes[:end]
+def extract_data(image_path: str | Path) -> bytes:
+    """Extract one length-prefixed payload from an LSB stego image."""
+    arr = _load_rgb(image_path)
+    flat = arr.reshape(-1)
+    header_bits = flat[: HEADER_BYTES * 8] & 1
+    payload_length = int.from_bytes(_bits_to_bytes(header_bits), "big")
+    max_payload = max(0, flat.size // 8 - HEADER_BYTES)
+
+    if payload_length <= 0 or payload_length > max_payload:
+        raise ValueError("no valid length-prefixed payload found")
+
+    total_bits = (HEADER_BYTES + payload_length) * 8
+    payload_bits = flat[HEADER_BYTES * 8 : total_bits] & 1
+    payload = _bits_to_bytes(payload_bits)
+    if len(payload) != payload_length:
+        raise ValueError("embedded payload is truncated")
+    return payload

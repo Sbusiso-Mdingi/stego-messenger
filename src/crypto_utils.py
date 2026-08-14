@@ -1,48 +1,61 @@
-import os
-import base64
-from typing import Tuple
-from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
-from cryptography.hazmat.primitives import hashes
-from cryptography.fernet import Fernet
+# Copyright 2026 Sbusiso Mdingi
+# SPDX-License-Identifier: Apache-2.0
 
-DEFAULT_ITERATIONS = 390_000 
-SALT_SIZE = 16 
+"""Authenticated encryption and password-based key derivation."""
+
+from __future__ import annotations
+
+import os
+
+from cryptography.hazmat.primitives.ciphers.aead import AESGCM
+from cryptography.hazmat.primitives.kdf.scrypt import Scrypt
+
+SALT_SIZE = 16
+NONCE_SIZE = 12
+KEY_SIZE = 32
+DEFAULT_SCRYPT_N = 2**14
+DEFAULT_SCRYPT_R = 8
+DEFAULT_SCRYPT_P = 1
+AAD = b"stego-messenger:v2"
+
 
 def generate_salt(length: int = SALT_SIZE) -> bytes:
-    """Return cryptographically secure random salt."""
+    if length < 16:
+        raise ValueError("salt length must be at least 16 bytes")
     return os.urandom(length)
 
-def derive_key_from_password(password: str, salt: bytes, iterations: int = DEFAULT_ITERATIONS) -> bytes:
-    """
-    Derive a Fernet-compatible key from a password using PBKDF2-HMAC-SHA256.
-    Returns the base64-url-safe-encoded 32-byte key usable by Fernet.
-    """
-    if isinstance(password, str):
-        password_bytes = password.encode('utf-8')
-    else:
-        password_bytes = password
 
-    kdf = PBKDF2HMAC(
-        algorithm=hashes.SHA256(),
-        length=32,          
-        salt=salt,
-        iterations=iterations,
-    )
-    key = kdf.derive(password_bytes)
-    return base64.urlsafe_b64encode(key)
+def derive_key_from_password(
+    password: str | bytes,
+    salt: bytes,
+    *,
+    n: int = DEFAULT_SCRYPT_N,
+    r: int = DEFAULT_SCRYPT_R,
+    p: int = DEFAULT_SCRYPT_P,
+) -> bytes:
+    """Derive a 256-bit key using scrypt."""
+    if not password:
+        raise ValueError("password must not be empty")
+    password_bytes = password.encode("utf-8") if isinstance(password, str) else password
+    kdf = Scrypt(salt=salt, length=KEY_SIZE, n=n, r=r, p=p)
+    return kdf.derive(password_bytes)
+
 
 def encrypt_message(message: str, key: bytes) -> bytes:
-    """
-    Encrypt plaintext message (string) using provided Fernet key (bytes).
-    key must be base64 urlsafe 32-byte key (Fernet format).
-    """
-    f = Fernet(key)
-    return f.encrypt(message.encode('utf-8'))
+    """Encrypt UTF-8 text with AES-256-GCM; returned bytes are nonce || ciphertext."""
+    if len(key) != KEY_SIZE:
+        raise ValueError("AES-GCM key must be 32 bytes")
+    nonce = os.urandom(NONCE_SIZE)
+    ciphertext = AESGCM(key).encrypt(nonce, message.encode("utf-8"), AAD)
+    return nonce + ciphertext
+
 
 def decrypt_message(token: bytes, key: bytes) -> str:
-    """
-    Decrypt ciphertext token using provided Fernet key.
-    Returns the plaintext string.
-    """
-    f = Fernet(key)
-    return f.decrypt(token).decode('utf-8')
+    """Decrypt a nonce-prefixed AES-GCM token."""
+    if len(key) != KEY_SIZE:
+        raise ValueError("AES-GCM key must be 32 bytes")
+    if len(token) <= NONCE_SIZE:
+        raise ValueError("encrypted payload is too short")
+    nonce, ciphertext = token[:NONCE_SIZE], token[NONCE_SIZE:]
+    plaintext = AESGCM(key).decrypt(nonce, ciphertext, AAD)
+    return plaintext.decode("utf-8")
