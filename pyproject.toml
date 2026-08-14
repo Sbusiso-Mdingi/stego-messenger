@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=75", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "stego-messenger"
+version = "0.2.0"
+description = "Open-source research toolkit for evaluating encrypted image steganography"
+readme = "README.md"
+requires-python = ">=3.10"
+license = "Apache-2.0"
+authors = [{ name = "Sbusiso Mdingi" }]
+dependencies = [
+  "cryptography>=43",
+  "numpy>=2.0",
+  "opencv-python-headless>=4.10",
+  "pillow>=10.4",
+]
+
+[project.optional-dependencies]
+ui = ["streamlit>=1.40"]
+dev = ["pytest>=8.3", "ruff>=0.8"]
+
+[tool.setuptools]
+packages = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"

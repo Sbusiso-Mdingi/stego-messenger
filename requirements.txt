@@ -1,5 +1,5 @@
-streamlit
-pillow
-cryptography
-opencv-python-headless
-numpy
+cryptography>=43
+numpy>=2.0
+opencv-python-headless>=4.10
+pillow>=10.4
+streamlit>=1.40

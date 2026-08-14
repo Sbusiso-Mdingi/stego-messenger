@@ -1,247 +1,156 @@
-import streamlit as st
-from PIL import Image
-import tempfile
-import os
-import base64
-import sys
-import io
-import zipfile
-import cv2
+# Copyright 2026 Sbusiso Mdingi
+# SPDX-License-Identifier: Apache-2.0
 
-# ----------------------------
-# Fix Python path so /src works
-# ----------------------------
+from __future__ import annotations
+
+import base64
+import io
+import json
+import os
+import sys
+import tempfile
+import zipfile
+
+import streamlit as st
+
 ROOT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 if ROOT_DIR not in sys.path:
     sys.path.append(ROOT_DIR)
 
-# ----------------------------
-# Project Imports (after path fix)
-# ----------------------------
-from src.crypto_utils import (
-    generate_salt,
+from src.crypto_utils import (  # noqa: E402
+    DEFAULT_SCRYPT_N,
+    DEFAULT_SCRYPT_P,
+    DEFAULT_SCRYPT_R,
+    decrypt_message,
     derive_key_from_password,
     encrypt_message,
-    decrypt_message,
-    DEFAULT_ITERATIONS
+    generate_salt,
+)
+from src.evaluation import evaluate_attacks, evaluate_embedding  # noqa: E402
+from src.lsb_stego import capacity_bytes, embed_data, extract_data  # noqa: E402
+from src.metadata import load_metadata, save_metadata  # noqa: E402
+from src.steganalysis import lsb_diagnostics, lsb_randomness_score  # noqa: E402
+
+st.set_page_config(page_title="Stego Messenger", layout="wide")
+st.title("Stego Messenger")
+st.caption("Experimental encrypted image steganography with evaluation-first reporting")
+st.info("Research software: metrics are measurements or heuristics, not guarantees of undetectability or robustness.")
+
+embed_tab, extract_tab, evaluation_tab, diagnostics_tab = st.tabs(
+    ["Embed", "Extract", "Evaluate", "LSB diagnostics"]
 )
 
-from src.lsb_stego import embed_data, extract_data
-from src.metadata import save_metadata, load_metadata
-from src.attacks import (
-    jpeg_compress,
-    add_gaussian_noise,
-    crop_image,
-    resize_image
-)
+with embed_tab:
+    image = st.file_uploader("Cover image", type=["png", "jpg", "jpeg"], key="cover")
+    password = st.text_input("Password", type="password", key="embed_password")
+    message = st.text_area("Message")
+    if image:
+        with tempfile.NamedTemporaryFile(suffix=".png", delete=False) as handle:
+            handle.write(image.getbuffer())
+            cover_path = handle.name
+        st.metric("Approximate payload capacity", f"{capacity_bytes(cover_path):,} bytes")
+        os.unlink(cover_path)
 
-from src.lsb_stego import embed_data, extract_data
-from src.metadata import save_metadata, load_metadata
-
-from src.steganalysis import lsb_anomaly_score
-
-st.set_page_config(page_title="Secure Steganography System", layout="centered")
-
-st.title("🔐 Secure Steganography System")
-st.caption("Encrypt • Embed • Extract hidden messages inside images")
-
-tab1, tab2, tab3, tab4 = st.tabs([
-    "🔒 Embed Message",
-    "🔓 Extract Message",
-    "⚔️ Attack Simulation",
-    "🛡 Steganalysis"
-])
-
-
-# -------------------------------
-# EMBED TAB
-# -------------------------------
-with tab1:
-    st.subheader("Hide an Encrypted Message in an Image")
-
-    uploaded_image = st.file_uploader("Upload an image", type=["png", "jpg", "jpeg"])
-
-    password = st.text_input("Password", type="password")
-    message = st.text_area("Secret Message")
-
-    if st.button("Encrypt & Embed"):
-        if not uploaded_image or not password or not message:
-            st.error("Please upload an image, enter a password, and write a message.")
+    if st.button("Encrypt and embed", type="primary"):
+        if not image or not password or not message:
+            st.error("Provide a cover image, password, and message.")
         else:
-            with tempfile.TemporaryDirectory() as tmpdir:
-                input_path = os.path.join(tmpdir, "input.png")
-                output_path = os.path.join(tmpdir, "stego.png")
-                meta_path = os.path.join(tmpdir, "stego_meta.json")
+            with tempfile.TemporaryDirectory() as tmp:
+                cover = os.path.join(tmp, "cover.png")
+                stego = os.path.join(tmp, "stego.png")
+                metadata = os.path.join(tmp, "metadata.json")
+                with open(cover, "wb") as handle:
+                    handle.write(image.getbuffer())
 
-                # Save uploaded image
-                with open(input_path, "wb") as f:
-                    f.write(uploaded_image.getbuffer())
-
-                # Generate salt and key
                 salt = generate_salt()
                 key = derive_key_from_password(password, salt)
-
-                salt_b64 = base64.urlsafe_b64encode(salt).decode()
-
-                # Save metadata
-                save_metadata(meta_path, salt_b64, DEFAULT_ITERATIONS)
-
-                # Encrypt and embed
-                ciphertext = encrypt_message(message, key)
-                embed_data(input_path, ciphertext, output_path)
-
-                # Display result
-                st.success("✅ Message successfully hidden in image!")
-                st.image(output_path, caption="Stego Image", use_column_width=True)
-
-                # Download files
-                
-
-                # ----------------------------
-                # Create ZIP in memory
-                # ----------------------------
-                zip_buffer = io.BytesIO()
-
-                with zipfile.ZipFile(zip_buffer, "w") as z:
-                    z.write(output_path, arcname="stego_image.png")
-                    z.write(meta_path, arcname="stego_meta.json")
-
-                zip_buffer.seek(0)
-
-                # ----------------------------
-                # Single Download Button
-                # ----------------------------
-                st.download_button(
-                    label="📦 Download Stego Package",
-                    data=zip_buffer,
-                    file_name="stego_package.zip",
-                mime="application/zip"
+                payload = encrypt_message(message, key)
+                embed_data(cover, payload, stego)
+                save_metadata(
+                    metadata,
+                    base64.urlsafe_b64encode(salt).decode("ascii"),
+                    n=DEFAULT_SCRYPT_N,
+                    r=DEFAULT_SCRYPT_R,
+                    p=DEFAULT_SCRYPT_P,
                 )
 
+                bundle = io.BytesIO()
+                with zipfile.ZipFile(bundle, "w", zipfile.ZIP_DEFLATED) as archive:
+                    archive.write(stego, "stego.png")
+                    archive.write(metadata, "metadata.json")
+                bundle.seek(0)
+                st.success("Payload embedded in lossless PNG output.")
+                st.image(stego)
+                st.download_button(
+                    "Download stego package", bundle, "stego-package.zip", "application/zip"
+                )
 
-# -------------------------------
-# EXTRACT TAB
-# -------------------------------
-with tab2:
-    st.subheader("Extract a Hidden Message")
-
-    stego_image = st.file_uploader("Upload a stego image", type=["png", "jpg", "jpeg"], key="stego")
-    meta_file = st.file_uploader("Upload metadata file", type=["json"], key="meta")
-    password_extract = st.text_input("Password to decrypt", type="password", key="pwd")
-
-    if st.button("Extract & Decrypt"):
-        if not stego_image or not meta_file or not password_extract:
-            st.error("Please upload stego image, metadata file, and password.")
+with extract_tab:
+    stego_upload = st.file_uploader("Stego PNG", type=["png"], key="extract_stego")
+    metadata_upload = st.file_uploader("Metadata JSON", type=["json"], key="extract_metadata")
+    password = st.text_input("Password", type="password", key="extract_password")
+    if st.button("Extract and decrypt"):
+        if not stego_upload or not metadata_upload or not password:
+            st.error("Provide the stego PNG, metadata JSON, and password.")
         else:
-            with tempfile.TemporaryDirectory() as tmpdir:
-                stego_path = os.path.join(tmpdir, "stego.png")
-                meta_path = os.path.join(tmpdir, "stego_meta.json")
-
-                # Save files
-                with open(stego_path, "wb") as f:
-                    f.write(stego_image.getbuffer())
-
-                with open(meta_path, "wb") as f:
-                    f.write(meta_file.getbuffer())
-
-                # Load metadata
-                meta = load_metadata(meta_path)
-                salt = base64.urlsafe_b64decode(meta["salt"])
-                iterations = meta["iterations"]
-
-                # Derive key
-                key = derive_key_from_password(password_extract, salt, iterations)
-
-                # Extract + decrypt
+            with tempfile.TemporaryDirectory() as tmp:
+                stego = os.path.join(tmp, "stego.png")
+                metadata = os.path.join(tmp, "metadata.json")
+                with open(stego, "wb") as handle:
+                    handle.write(stego_upload.getbuffer())
+                with open(metadata, "wb") as handle:
+                    handle.write(metadata_upload.getbuffer())
                 try:
-                    hidden_data = extract_data(stego_path)
-                    plaintext = decrypt_message(hidden_data, key)
-                    st.success("✅ Message successfully recovered!")
-                    st.text_area("Recovered Message:", plaintext)
-                except Exception as e:
-                    st.error(f"❌ Failed to extract/decrypt: {str(e)}")
+                    meta = load_metadata(metadata)
+                    salt = base64.urlsafe_b64decode(meta["salt"])
+                    params = meta["scrypt"]
+                    key = derive_key_from_password(password, salt, **params)
+                    plaintext = decrypt_message(extract_data(stego), key)
+                    st.success("Authenticated payload recovered.")
+                    st.text_area("Recovered message", plaintext)
+                except Exception as exc:
+                    st.error(f"Recovery failed: {exc}")
 
-# -------------------------------
-# ATTACK SIMULATION TAB
-# -------------------------------
-with tab3:
-    st.subheader("⚔️ Steganography Attack Simulator")
-
-    attack_image = st.file_uploader(
-        "Upload a stego image to attack",
-        type=["png", "jpg", "jpeg"],
-        key="attack_img"
+with evaluation_tab:
+    cover_upload = st.file_uploader(
+        "Cover image", type=["png", "jpg", "jpeg"], key="eval_cover"
     )
+    payload_text = st.text_input("Benchmark payload", value="reproducible benchmark payload")
+    if st.button("Run benchmark") and cover_upload:
+        with tempfile.TemporaryDirectory() as tmp:
+            cover = os.path.join(tmp, "cover.png")
+            stego = os.path.join(tmp, "stego.png")
+            with open(cover, "wb") as handle:
+                handle.write(cover_upload.getbuffer())
+            payload = payload_text.encode("utf-8")
+            metrics = evaluate_embedding(cover, payload, stego)
+            attacks = evaluate_attacks(stego, payload, os.path.join(tmp, "attacks"))
+            cols = st.columns(4)
+            cols[0].metric("PSNR", f"{metrics['psnr_db']:.2f} dB")
+            cols[1].metric("MSE", f"{metrics['mse']:.4f}")
+            cols[2].metric("BER", f"{metrics['bit_error_rate']:.4f}")
+            cols[3].metric("Capacity used", f"{metrics['capacity_utilization']:.2%}")
+            st.subheader("Transformation recovery")
+            st.dataframe(attacks, use_container_width=True)
+            st.download_button(
+                "Download metrics JSON",
+                json.dumps({"embedding": metrics, "attacks": attacks}, indent=2),
+                "benchmark.json",
+                "application/json",
+            )
 
-    attack_type = st.selectbox(
-        "Choose attack type",
-        ["JPEG Compression", "Gaussian Noise", "Cropping", "Resize"]
-    )
-
-    run_attack = st.button("Run Attack")
-
-    if run_attack and attack_image:
-        with tempfile.TemporaryDirectory() as tmpdir:
-            img_path = os.path.join(tmpdir, "input.png")
-            out_path = os.path.join(tmpdir, "attacked.png")
-
-            # Save uploaded image
-            with open(img_path, "wb") as f:
-                f.write(attack_image.getbuffer())
-
-            img = cv2.imread(img_path)
-
-            # Apply selected attack
-            if attack_type == "JPEG Compression":
-                attacked = jpeg_compress(img_path)
-            elif attack_type == "Gaussian Noise":
-                attacked = add_gaussian_noise(img)
-            elif attack_type == "Cropping":
-                attacked = crop_image(img)
-            else:
-                attacked = resize_image(img)
-
-            # Save attacked image
-            cv2.imwrite(out_path, attacked)
-
-            st.image(out_path, caption=f"{attack_type} Applied", use_column_width=True)
-
-            # Allow download
-            with open(out_path, "rb") as f:
-                st.download_button(
-                    "📥 Download Attacked Image",
-                    data=f,
-                    file_name="attacked_image.png"
-                )
-                
-# -------------------------------
-# STEGANALYSIS TAB
-# -------------------------------
-with tab4:
-    st.subheader("🛡 Steganography Detection")
-
-    analysis_img = st.file_uploader(
-        "Upload an image to analyze",
-        type=["png", "jpg", "jpeg"],
-        key="analysis"
-    )
-
-    if st.button("Analyze Image"):
-        if analysis_img:
-            with tempfile.TemporaryDirectory() as tmpdir:
-                img_path = os.path.join(tmpdir, "analysis.png")
-
-                with open(img_path, "wb") as f:
-                    f.write(analysis_img.getbuffer())
-
-                score = lsb_anomaly_score(img_path)
-
-                st.metric("Suspicion Score", f"{score:.4f}")
-
-                if score > 0.8:
-                    st.error("⚠️ High likelihood of hidden data detected")
-                elif score > 0.5:
-                    st.warning("⚠️ Possible hidden data detected")
-                else:
-                    st.success("✅ Image appears clean")
-
+with diagnostics_tab:
+    image = st.file_uploader("Image", type=["png", "jpg", "jpeg"], key="diagnostic_image")
+    if st.button("Compute diagnostics") and image:
+        with tempfile.NamedTemporaryFile(suffix=".png", delete=False) as handle:
+            handle.write(image.getbuffer())
+            path = handle.name
+        try:
+            metrics = lsb_diagnostics(path)
+            st.json(metrics)
+            st.metric("LSB randomness heuristic", f"{lsb_randomness_score(path):.3f}")
+            st.caption(
+                "This score describes LSB-plane randomness. It is not a probability that steganography is present."
+            )
+        finally:
+            os.unlink(path)
