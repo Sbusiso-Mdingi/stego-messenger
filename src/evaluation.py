@@ -12,10 +12,11 @@ from pathlib import Path
 import cv2
 import numpy as np
 from PIL import Image
+from skimage.metrics import structural_similarity
 
 from .attacks import add_gaussian_noise, crop_image, jpeg_compress, read_image, resize_image
 from .lsb_stego import capacity_bytes, embed_data, extract_data
-from .steganalysis import lsb_diagnostics
+from .steganalysis import chi_square_attack, lsb_diagnostics, rs_analysis
 
 
 def _rgb_array(path: str | Path) -> np.ndarray:
@@ -36,6 +37,22 @@ def psnr_db(reference_path: str | Path, candidate_path: str | Path) -> float:
     if mse == 0:
         return math.inf
     return float(10 * math.log10((255.0**2) / mse))
+
+
+def ssim(reference_path: str | Path, candidate_path: str | Path) -> float:
+    """Structural similarity between cover and stego, averaged over RGB channels.
+
+    SSIM is a perceptual distortion measure: 1.0 is identical, lower is more degraded.
+    It complements PSNR, which only reflects mean squared error. Uses the scikit-image
+    implementation with its default 7x7 Gaussian window.
+    """
+    reference = _rgb_array(reference_path).astype(np.float64)
+    candidate = _rgb_array(candidate_path).astype(np.float64)
+    if reference.shape != candidate.shape:
+        raise ValueError("images must have the same dimensions")
+    return float(
+        structural_similarity(reference, candidate, channel_axis=2, data_range=255.0)
+    )
 
 
 def bit_error_rate(expected: bytes, actual: bytes) -> float:
@@ -64,8 +81,23 @@ def evaluate_embedding(
         "bit_error_rate": bit_error_rate(payload, recovered),
         "mse": mean_squared_error(cover_path, stego_path),
         "psnr_db": psnr_db(cover_path, stego_path),
+        "ssim": ssim(cover_path, stego_path),
         "cover_lsb": lsb_diagnostics(cover_path),
         "stego_lsb": lsb_diagnostics(stego_path),
+        # How detectable the embedding is, measured on cover and stego by two calibrated
+        # steganalysis detectors. The gap between the two columns is the detectability.
+        "cover_detection": _detection(cover_path),
+        "stego_detection": _detection(stego_path),
+    }
+
+
+def _detection(path: str | Path) -> dict[str, float]:
+    chi = chi_square_attack(path)
+    rs = rs_analysis(path)
+    return {
+        "chi_square_mean_probability": chi["mean_embedding_probability"],
+        "rs_estimated_rate": rs["estimated_embedding_rate"],
+        "rs_reliable": rs["reliable"],
     }
 
 
