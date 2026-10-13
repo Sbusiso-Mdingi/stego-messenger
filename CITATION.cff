@@ -5,7 +5,7 @@ type: software
 authors:
   - family-names: "Mdingi"
     given-names: "Sbusiso"
-version: 0.2.0
-date-released: 2026-08-14
+version: 0.3.0
+date-released: 2026-10-13
 repository-code: "https://github.com/Sbusiso-Mdingi/stego-messenger"
 license: Apache-2.0

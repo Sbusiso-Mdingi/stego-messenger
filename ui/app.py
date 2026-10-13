@@ -17,7 +17,7 @@ ROOT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 if ROOT_DIR not in sys.path:
     sys.path.append(ROOT_DIR)
 
-from src.crypto_utils import (  # noqa: E402
+from src.crypto_utils import (
     DEFAULT_SCRYPT_N,
     DEFAULT_SCRYPT_P,
     DEFAULT_SCRYPT_R,
@@ -26,10 +26,15 @@ from src.crypto_utils import (  # noqa: E402
     encrypt_message,
     generate_salt,
 )
-from src.evaluation import evaluate_attacks, evaluate_embedding  # noqa: E402
-from src.lsb_stego import capacity_bytes, embed_data, extract_data  # noqa: E402
-from src.metadata import load_metadata, save_metadata  # noqa: E402
-from src.steganalysis import lsb_diagnostics, lsb_randomness_score  # noqa: E402
+from src.evaluation import evaluate_attacks, evaluate_embedding
+from src.lsb_stego import capacity_bytes, embed_data, extract_data
+from src.metadata import load_metadata, save_metadata
+from src.steganalysis import (
+    chi_square_attack,
+    lsb_diagnostics,
+    lsb_randomness_score,
+    rs_analysis,
+)
 
 st.set_page_config(page_title="Stego Messenger", layout="wide")
 st.title("Stego Messenger")
@@ -108,7 +113,7 @@ with extract_tab:
                     plaintext = decrypt_message(extract_data(stego), key)
                     st.success("Authenticated payload recovered.")
                     st.text_area("Recovered message", plaintext)
-                except Exception as exc:
+                except Exception as exc:  # noqa: BLE001 - surface any failure to the user
                     st.error(f"Recovery failed: {exc}")
 
 with evaluation_tab:
@@ -127,9 +132,29 @@ with evaluation_tab:
             attacks = evaluate_attacks(stego, payload, os.path.join(tmp, "attacks"))
             cols = st.columns(4)
             cols[0].metric("PSNR", f"{metrics['psnr_db']:.2f} dB")
-            cols[1].metric("MSE", f"{metrics['mse']:.4f}")
+            cols[1].metric("SSIM", f"{metrics['ssim']:.4f}")
             cols[2].metric("BER", f"{metrics['bit_error_rate']:.4f}")
             cols[3].metric("Capacity used", f"{metrics['capacity_utilization']:.2%}")
+
+            st.subheader("Detectability")
+            rs_cover = metrics["cover_detection"]["rs_estimated_rate"]
+            rs_stego = metrics["stego_detection"]["rs_estimated_rate"]
+            det = st.columns(2)
+            det[0].metric(
+                "RS estimated rate (stego)",
+                f"{rs_stego:.3f}",
+                delta=f"{rs_stego - rs_cover:+.3f} vs cover",
+            )
+            det[1].metric(
+                "Chi-square probability (stego)",
+                f"{metrics['stego_detection']['chi_square_mean_probability']:.3f}",
+            )
+            st.caption(
+                "Low distortion with a raised RS rate is the expected result: the embedding "
+                "is hard to see but detectable. Encryption hides the content, not the "
+                "presence of a payload."
+            )
+
             st.subheader("Transformation recovery")
             st.dataframe(attacks, use_container_width=True)
             st.download_button(
@@ -146,11 +171,30 @@ with diagnostics_tab:
             handle.write(image.getbuffer())
             path = handle.name
         try:
-            metrics = lsb_diagnostics(path)
-            st.json(metrics)
+            st.subheader("Calibrated detectors")
+            rs = rs_analysis(path)
+            chi = chi_square_attack(path)
+            det = st.columns(2)
+            det[0].metric("RS estimated embedding rate", f"{rs['estimated_embedding_rate']:.3f}")
+            det[1].metric("Chi-square probability", f"{chi['mean_embedding_probability']:.3f}")
+            if not rs["reliable"]:
+                st.warning(
+                    "RS analysis is at its singular point (a near-saturated LSB plane); "
+                    "treat the rate as approximate."
+                )
+            st.caption(
+                "RS analysis (Fridrich et al., 2001) estimates the fraction of pixels whose "
+                "LSB was modified: near zero for a clean image, rising towards one with "
+                "embedding. The chi-square probability (Westfeld & Pfitzmann, 2000) is a "
+                "coarser screen."
+            )
+
+            st.subheader("Descriptive LSB diagnostics")
+            st.json(lsb_diagnostics(path))
             st.metric("LSB randomness heuristic", f"{lsb_randomness_score(path):.3f}")
             st.caption(
-                "This score describes LSB-plane randomness. It is not a probability that steganography is present."
+                "These describe LSB-plane randomness. They are not probabilities that "
+                "steganography is present."
             )
         finally:
             os.unlink(path)

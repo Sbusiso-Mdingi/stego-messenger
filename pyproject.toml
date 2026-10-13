@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "stego-messenger"
-version = "0.2.0"
+version = "0.3.0"
 description = "Open-source research toolkit for evaluating encrypted image steganography"
 readme = "README.md"
 requires-python = ">=3.10"
@@ -15,11 +15,15 @@ dependencies = [
   "numpy>=2.0",
   "opencv-python-headless>=4.10",
   "pillow>=10.4",
+  "scikit-image>=0.24",
 ]
 
 [project.optional-dependencies]
 ui = ["streamlit>=1.40"]
 dev = ["pytest>=8.3", "ruff>=0.8"]
+
+[project.scripts]
+stego-benchmark = "src.benchmark:main"
 
 [tool.setuptools]
 packages = ["src"]

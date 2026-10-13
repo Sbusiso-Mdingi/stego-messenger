@@ -12,17 +12,20 @@
 
 ## v0.3 — Reproducible benchmark suite
 
-- [ ] Add a versioned public image corpus manifest and benchmark CLI
-- [ ] Add SSIM with a documented implementation/dependency
-- [ ] Export benchmark results as JSON/CSV with environment metadata
-- [ ] Add payload-size sweeps and confidence intervals
-- [ ] Add baseline comparison against at least one external steganography method
+- [x] Add a public image corpus (scikit-image samples) and benchmark CLI (`src/benchmark.py`)
+- [x] Add SSIM via scikit-image (`src/evaluation.py: ssim`)
+- [x] Export benchmark results as JSON/CSV with environment metadata
+- [x] Add payload-size sweeps and confidence intervals over seeds
+- [x] Add calibrated steganalysis detectors (chi-square and RS analysis) and report
+      detectability alongside distortion
+- [ ] Add a baseline comparison against at least one external steganography library
 
 ## v0.4 — Robust embedding experiments
 
 - [ ] Implement a documented transform-domain baseline (DCT or DWT)
 - [ ] Add error-correcting codes and quantify capacity/robustness trade-offs
-- [ ] Add calibrated steganalysis baselines on labelled cover/stego datasets
+- [ ] Add a learned steganalysis classifier on labelled cover/stego datasets, calibrated
+      against the structural detectors already implemented
 - [ ] Publish reproducible experiment notebooks/reports
 
 ## Non-goals

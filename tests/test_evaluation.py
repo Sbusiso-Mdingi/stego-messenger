@@ -20,3 +20,7 @@ def test_embedding_metrics(tmp_path):
     assert result["bit_error_rate"] == 0.0
     assert result["mse"] >= 0.0
     assert result["psnr_db"] > 40.0
+    assert 0.0 <= result["ssim"] <= 1.0
+    # Detectability is reported for both cover and stego.
+    assert "rs_estimated_rate" in result["stego_detection"]
+    assert "chi_square_mean_probability" in result["cover_detection"]
