@@ -15,3 +15,7 @@ benchmark-output/
 stego_meta.json
 stego_output.png
 secure_stego.png
+
+# Regenerated public-domain benchmark corpus (results are kept)
+docs/benchmarks/*/corpus/
+node_modules/
