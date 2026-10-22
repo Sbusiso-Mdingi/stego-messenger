@@ -16,7 +16,7 @@ from skimage.metrics import structural_similarity
 
 from .attacks import add_gaussian_noise, crop_image, jpeg_compress, read_image, resize_image
 from .lsb_stego import capacity_bytes, embed_data, extract_data
-from .steganalysis import chi_square_attack, lsb_diagnostics, rs_analysis
+from .steganalysis import chi_square_attack, hcf_com_calibrated, lsb_diagnostics, rs_analysis
 
 
 def _rgb_array(path: str | Path) -> np.ndarray:
@@ -69,11 +69,15 @@ def evaluate_embedding(
     cover_path: str | Path,
     payload: bytes,
     stego_path: str | Path,
+    *,
+    method: str = "sequential",
+    key: bytes | None = None,
 ) -> dict[str, object]:
-    embed_data(cover_path, payload, stego_path)
-    recovered = extract_data(stego_path)
+    embed_data(cover_path, payload, stego_path, method=method, key=key)
+    recovered = extract_data(stego_path, method=method, key=key)
     capacity = capacity_bytes(cover_path)
     return {
+        "method": method,
         "payload_bytes": len(payload),
         "capacity_bytes": capacity,
         "capacity_utilization": len(payload) / capacity if capacity else 0.0,
@@ -98,6 +102,7 @@ def _detection(path: str | Path) -> dict[str, float]:
         "chi_square_mean_probability": chi["mean_embedding_probability"],
         "rs_estimated_rate": rs["estimated_embedding_rate"],
         "rs_reliable": rs["reliable"],
+        "hcf_com_ratio": hcf_com_calibrated(path)["ratio"],
     }
 
 
@@ -105,6 +110,9 @@ def evaluate_attacks(
     stego_path: str | Path,
     expected_payload: bytes,
     output_dir: str | Path,
+    *,
+    method: str = "sequential",
+    key: bytes | None = None,
 ) -> list[dict[str, object]]:
     output = Path(output_dir)
     output.mkdir(parents=True, exist_ok=True)
@@ -123,7 +131,7 @@ def evaluate_attacks(
         attacked_path = output / f"{name}.png"
         cv2.imwrite(str(attacked_path), attacked)
         try:
-            recovered = extract_data(attacked_path)
+            recovered = extract_data(attacked_path, method=method, key=key)
             success = recovered == expected_payload
             ber = bit_error_rate(expected_payload, recovered)
             error = None

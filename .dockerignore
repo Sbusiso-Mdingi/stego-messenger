@@ -1,0 +1,10 @@
+.git
+.venv
+.pytest_cache
+.ruff_cache
+**/__pycache__
+*.egg-info
+web/dashboard/node_modules
+web/dashboard/dist
+docs/benchmarks/latest/corpus
+benchmark-output

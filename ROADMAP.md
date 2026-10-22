@@ -20,7 +20,15 @@
       detectability alongside distortion
 - [ ] Add a baseline comparison against at least one external steganography library
 
-## v0.4 — Robust embedding experiments
+## v0.4: Detectability and a usable package
+
+- [x] Add keyed LSB matching at key-seeded positions alongside sequential replacement
+- [x] Make stego images self-contained (no separate metadata file) with length-hiding padding
+- [x] Add a detector that targets LSB matching (calibrated HCF-COM)
+- [x] Benchmark both methods against all three detectors
+- [x] Replace the Streamlit UI with a web preview that compares the methods live
+
+## v0.5: Robust embedding experiments
 
 - [ ] Implement a documented transform-domain baseline (DCT or DWT)
 - [ ] Add error-correcting codes and quantify capacity/robustness trade-offs

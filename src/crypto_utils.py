@@ -41,21 +41,29 @@ def derive_key_from_password(
     return kdf.derive(password_bytes)
 
 
-def encrypt_message(message: str, key: bytes) -> bytes:
-    """Encrypt UTF-8 text with AES-256-GCM; returned bytes are nonce || ciphertext."""
+def encrypt_bytes(plaintext: bytes, key: bytes) -> bytes:
+    """Encrypt bytes with AES-256-GCM; returned bytes are nonce || ciphertext."""
     if len(key) != KEY_SIZE:
         raise ValueError("AES-GCM key must be 32 bytes")
     nonce = os.urandom(NONCE_SIZE)
-    ciphertext = AESGCM(key).encrypt(nonce, message.encode("utf-8"), AAD)
-    return nonce + ciphertext
+    return nonce + AESGCM(key).encrypt(nonce, plaintext, AAD)
 
 
-def decrypt_message(token: bytes, key: bytes) -> str:
-    """Decrypt a nonce-prefixed AES-GCM token."""
+def decrypt_bytes(token: bytes, key: bytes) -> bytes:
+    """Decrypt a nonce-prefixed AES-GCM token; raises ``InvalidTag`` on a wrong key."""
     if len(key) != KEY_SIZE:
         raise ValueError("AES-GCM key must be 32 bytes")
     if len(token) <= NONCE_SIZE:
         raise ValueError("encrypted payload is too short")
     nonce, ciphertext = token[:NONCE_SIZE], token[NONCE_SIZE:]
-    plaintext = AESGCM(key).decrypt(nonce, ciphertext, AAD)
-    return plaintext.decode("utf-8")
+    return AESGCM(key).decrypt(nonce, ciphertext, AAD)
+
+
+def encrypt_message(message: str, key: bytes) -> bytes:
+    """Encrypt UTF-8 text with AES-256-GCM; returned bytes are nonce || ciphertext."""
+    return encrypt_bytes(message.encode("utf-8"), key)
+
+
+def decrypt_message(token: bytes, key: bytes) -> str:
+    """Decrypt a nonce-prefixed AES-GCM token."""
+    return decrypt_bytes(token, key).decode("utf-8")

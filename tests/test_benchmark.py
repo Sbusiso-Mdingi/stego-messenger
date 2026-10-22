@@ -21,21 +21,20 @@ def test_run_small_sweep_exports_json_and_csv(tmp_path):
     results = benchmark.run(
         fractions=(0.0, 0.25),
         seeds=(0, 1),
-        names=("astronaut",),
+        names=("coffee",),
         out_dir=tmp_path,
     )
     assert (tmp_path / "benchmark.json").exists()
     assert (tmp_path / "measurements.csv").exists()
-    assert len(results["measurements"]) == 4
+    assert len(results["measurements"]) == 8  # two methods x two fractions x two seeds
     assert results["environment"]["python"]
     # Recovery from lossless PNG is exact at every embedded point.
     assert all(m["roundtrip_success"] for m in results["measurements"])
     # The detector separates the clean control from the embedded point.
-    by_fraction = {s["fraction"]: s for s in results["summary_by_fraction"]}
-    assert (
-        by_fraction[0.25]["rs_estimated_rate"]["mean"]
-        > by_fraction[0.0]["rs_estimated_rate"]["mean"]
-    )
+    rs = {(s["method"], s["fraction"]): s["rs_estimated_rate"]["mean"] for s in results["summary"]}
+    assert rs[("sequential", 0.25)] > rs[("sequential", 0.0)] + 0.15
+    # RS analysis targets replacement; keyed LSB matching stays close to the clean control.
+    assert rs[("keyed", 0.25)] < rs[("sequential", 0.25)] - 0.1
 
 
 def test_json_is_serialisable(tmp_path):

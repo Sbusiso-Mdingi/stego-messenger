@@ -3,7 +3,8 @@
 
 """Reproducible steganography benchmark.
 
-Sweeps payload size across a fixed public-domain image corpus, embeds random payloads
+Sweeps payload size across a fixed public-domain image corpus for each embedding method
+(sequential LSB replacement and keyed LSB matching), embeds random payloads
 (indistinguishable from the AES-GCM ciphertext this toolkit actually hides), and records
 distortion, recovery and detectability with confidence intervals over several seeds.
 Results and the full environment are exported as JSON and CSV so a run can be compared or
@@ -34,8 +35,8 @@ from PIL import Image
 from skimage import data
 
 from .evaluation import bit_error_rate, psnr_db, ssim
-from .lsb_stego import capacity_bytes, embed_data, extract_data
-from .steganalysis import chi_square_attack, rs_analysis
+from .lsb_stego import METHODS, capacity_bytes, embed_data, extract_data
+from .steganalysis import chi_square_attack, hcf_com_calibrated, rs_analysis
 
 # Public-domain RGB images shipped with scikit-image. Documented provenance, no download.
 CORPUS = ("astronaut", "coffee", "rocket", "chelsea", "hubble_deep_field")
@@ -45,8 +46,9 @@ DEFAULT_SEEDS = (0, 1, 2, 3, 4)
 
 @dataclass
 class Measurement:
-    """One (image, payload fraction, seed) observation."""
+    """One (method, image, payload fraction, seed) observation."""
 
+    method: str
     image: str
     fraction: float
     seed: int
@@ -59,6 +61,8 @@ class Measurement:
     chi_square_probability: float
     rs_estimated_rate: float
     rs_reliable: bool
+    hcf_com_ratio: float
+    hcf_com_shift: float
 
 
 @dataclass
@@ -128,27 +132,32 @@ def measure(
     fraction: float,
     seed: int,
     work_dir: Path,
+    method: str = "sequential",
 ) -> Measurement:
     """Embed one random payload at the given fraction of capacity and measure it."""
     capacity = capacity_bytes(cover_path)
     n_bytes = round(capacity * fraction)
     rng = np.random.default_rng(seed)
     payload = rng.integers(0, 256, n_bytes, dtype=np.uint8).tobytes()
+    # A fixed per-seed key keeps keyed runs reproducible without paying for scrypt.
+    key = f"benchmark-seed-{seed}".encode() if method == "keyed" else None
 
-    stego = work_dir / f"{cover_path.stem}_f{fraction}_s{seed}.png"
+    stego = work_dir / f"{method}_{cover_path.stem}_f{fraction}_s{seed}.png"
     if n_bytes == 0:
         # The zero-payload point is the clean-cover control for the detectors.
         Image.open(cover_path).convert("RGB").save(stego)
         roundtrip, ber = True, 0.0
     else:
-        embed_data(cover_path, payload, stego)
-        recovered = extract_data(stego)
+        embed_data(cover_path, payload, stego, method=method, key=key, seed=seed)
+        recovered = extract_data(stego, method=method, key=key)
         roundtrip = recovered == payload
         ber = bit_error_rate(payload, recovered)
 
     chi = chi_square_attack(stego)
     rs = rs_analysis(stego)
+    hcf = hcf_com_calibrated(stego)["ratio"]
     return Measurement(
+        method=method,
         image=cover_path.stem,
         fraction=fraction,
         seed=seed,
@@ -161,6 +170,9 @@ def measure(
         chi_square_probability=chi["mean_embedding_probability"],
         rs_estimated_rate=rs["estimated_embedding_rate"],
         rs_reliable=bool(rs["reliable"]),
+        hcf_com_ratio=hcf,
+        # Paired with the image's own cover: how far embedding moved the score.
+        hcf_com_shift=hcf - hcf_com_calibrated(cover_path)["ratio"],
     )
 
 
@@ -169,6 +181,7 @@ def run(
     seeds: tuple[int, ...] = DEFAULT_SEEDS,
     names: tuple[str, ...] = CORPUS,
     out_dir: str | Path = "benchmark-output",
+    methods: tuple[str, ...] = METHODS,
 ) -> dict:
     """Run the full sweep and return a results dictionary (also written to disk)."""
     out = Path(out_dir)
@@ -177,18 +190,20 @@ def run(
     rows: list[Measurement] = []
     with tempfile.TemporaryDirectory() as tmp:
         work = Path(tmp)
-        for cover in corpus:
-            for fraction in fractions:
-                for seed in seeds:
-                    rows.append(measure(cover, fraction, seed, work))
+        for method in methods:
+            for cover in corpus:
+                for fraction in fractions:
+                    for seed in seeds:
+                        rows.append(measure(cover, fraction, seed, work, method))
 
-    summary = _summarise(rows, fractions)
+    summary = _summarise(rows, fractions, methods)
     results = {
         "environment": _environment(),
+        "methods": list(methods),
         "corpus": [c.name for c in corpus],
         "fractions": list(fractions),
         "seeds": list(seeds),
-        "summary_by_fraction": summary,
+        "summary": summary,
         "measurements": [vars(r) for r in rows],
     }
 
@@ -198,21 +213,32 @@ def run(
     return results
 
 
-def _summarise(rows: list[Measurement], fractions: tuple[float, ...]) -> list[dict]:
+def _summarise(
+    rows: list[Measurement], fractions: tuple[float, ...], methods: tuple[str, ...]
+) -> list[dict]:
     out = []
-    for fraction in fractions:
-        subset = [r for r in rows if r.fraction == fraction]
-        finite_psnr = [r.psnr_db for r in subset if math.isfinite(r.psnr_db)]
-        out.append({
-            "fraction": fraction,
-            "n": len(subset),
-            "roundtrip_success_rate": float(np.mean([r.roundtrip_success for r in subset])),
-            "psnr_db": vars(_mean_ci(finite_psnr)) if finite_psnr else None,
-            "ssim": vars(_mean_ci([r.ssim for r in subset])),
-            "chi_square_probability": vars(_mean_ci([r.chi_square_probability for r in subset])),
-            "rs_estimated_rate": vars(_mean_ci([r.rs_estimated_rate for r in subset])),
-        })
+    for method in methods:
+        for fraction in fractions:
+            subset = [r for r in rows if r.method == method and r.fraction == fraction]
+            if subset:
+                out.append(_aggregate(method, fraction, subset))
     return out
+
+
+def _aggregate(method: str, fraction: float, subset: list[Measurement]) -> dict:
+    finite_psnr = [r.psnr_db for r in subset if math.isfinite(r.psnr_db)]
+    return {
+        "method": method,
+        "fraction": fraction,
+        "n": len(subset),
+        "roundtrip_success_rate": float(np.mean([r.roundtrip_success for r in subset])),
+        "psnr_db": vars(_mean_ci(finite_psnr)) if finite_psnr else None,
+        "ssim": vars(_mean_ci([r.ssim for r in subset])),
+        "chi_square_probability": vars(_mean_ci([r.chi_square_probability for r in subset])),
+        "rs_estimated_rate": vars(_mean_ci([r.rs_estimated_rate for r in subset])),
+        "hcf_com_ratio": vars(_mean_ci([r.hcf_com_ratio for r in subset])),
+        "hcf_com_shift": vars(_mean_ci([r.hcf_com_shift for r in subset])),
+    }
 
 
 def _write_csv(path: Path, rows: list[Measurement]) -> None:
@@ -257,6 +283,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--seeds", type=int, nargs="+", default=list(DEFAULT_SEEDS))
     parser.add_argument("--fractions", type=float, nargs="+", default=list(DEFAULT_FRACTIONS))
     parser.add_argument("--images", nargs="+", default=list(CORPUS))
+    parser.add_argument("--methods", nargs="+", default=list(METHODS), choices=METHODS)
     args = parser.parse_args(argv)
 
     results = run(
@@ -264,15 +291,18 @@ def main(argv: list[str] | None = None) -> int:
         seeds=tuple(args.seeds),
         names=tuple(args.images),
         out_dir=args.out,
+        methods=tuple(args.methods),
     )
     print(f"Wrote {len(results['measurements'])} measurements to {args.out}/")
-    for row in results["summary_by_fraction"]:
+    for row in results["summary"]:
         psnr = row["psnr_db"]["mean"] if row["psnr_db"] else float("inf")
         print(
-            f"  fraction {row['fraction']:>4}: "
+            f"  {row['method']:<10} fraction {row['fraction']:>4}: "
             f"PSNR {psnr:6.1f} dB  "
             f"SSIM {row['ssim']['mean']:.4f}  "
             f"RS rate {row['rs_estimated_rate']['mean']:.3f}  "
+            f"chi {row['chi_square_probability']['mean']:.3f}  "
+            f"HCF shift {row['hcf_com_shift']['mean']:+.4f}  "
             f"recovery {row['roundtrip_success_rate']*100:5.1f}%"
         )
     return 0

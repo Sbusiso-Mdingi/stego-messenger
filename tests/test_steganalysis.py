@@ -105,3 +105,15 @@ def test_tiny_image_rejected():
             path = f"{d}/t.png"
             Image.fromarray(np.zeros((1, 1, 3), dtype=np.uint8), mode="RGB").save(path)
             chi_square_attack(path)
+
+
+def test_hcf_com_drops_with_lsb_matching(tmp_path):
+    from src.lsb_stego import embed_data as embed
+    from src.steganalysis import hcf_com_calibrated
+
+    cover = tmp_path / "cover.png"
+    _cover(cover)
+    stego = tmp_path / "matched.png"
+    payload = np.random.default_rng(0).integers(0, 256, 60000, dtype=np.uint8).tobytes()
+    embed(cover, payload, stego, method="keyed", key=b"k", seed=0)
+    assert hcf_com_calibrated(stego)["ratio"] < hcf_com_calibrated(cover)["ratio"]

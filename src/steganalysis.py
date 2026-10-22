@@ -1,7 +1,7 @@
 # Copyright 2026 Sbusiso Mdingi
 # SPDX-License-Identifier: Apache-2.0
 
-"""Steganalysis for sequential LSB-replacement embedding.
+"""Steganalysis for LSB embedding.
 
 Two kinds of tool live here, and the distinction matters:
 
@@ -9,15 +9,21 @@ Two kinds of tool live here, and the distinction matters:
   least-significant-bit plane. They are not detectors and do not output a probability
   that an image carries a payload.
 * ``chi_square_attack`` and ``rs_analysis`` are *calibrated detectors* from the public
-  steganalysis literature. They estimate whether, and how much, sequential LSB
-  replacement has taken place. The purpose is defensive: to measure how detectable this
-  project's own embedding is, so that any robustness claim is grounded in a measurement
-  rather than assumed.
+  steganalysis literature. They estimate whether, and how much, LSB *replacement* has
+  taken place. The purpose is defensive: to measure how detectable this project's own
+  embedding is, so that any robustness claim is grounded in a measurement rather than
+  assumed.
+* ``hcf_com_calibrated`` targets LSB *matching*, which the two detectors above are
+  largely blind to. Matching acts like adding low-amplitude noise, which smooths the
+  histogram and lowers the centre of mass of its characteristic function; comparing the
+  image with a downsampled copy of itself calibrates that measure.
 
 References
 ----------
 Westfeld and Pfitzmann (2000), "Attacks on Steganographic Systems" (chi-square).
 Fridrich, Goljan and Du (2001), "Reliable Detection of LSB Steganography" (RS analysis).
+Harmsen and Pearlman (2003), "Steganalysis of Additive Noise Modelable Information Hiding".
+Ker (2005), "Steganalysis of LSB Matching in Grayscale Images" (calibrated HCF-COM).
 """
 
 from __future__ import annotations
@@ -285,3 +291,39 @@ def _solve_rs_quadratic(d0: float, dm0: float, d1: float, dm1: float) -> tuple[f
         return 1.0, True
     p = z / denom
     return float(min(1.0, max(0.0, p))), True
+
+
+# --------------------------------------------------------------------------------------
+# Calibrated HCF centre of mass (Harmsen & Pearlman, 2003; Ker, 2005)
+# --------------------------------------------------------------------------------------
+
+def _hcf_com(histogram: np.ndarray) -> float:
+    """Centre of mass of the histogram characteristic function over frequencies 1..128."""
+    hcf = np.abs(np.fft.fft(histogram.astype(np.float64)))[1:129]
+    k = np.arange(1, 129, dtype=np.float64)
+    total = hcf.sum()
+    return float((k * hcf).sum() / total) if total > 0 else 0.0
+
+
+def hcf_com_calibrated(image_path: str | Path) -> dict[str, float | list[float]]:
+    """Ratio of the image's HCF centre of mass to that of its 2x2-downsampled copy.
+
+    Downsampling averages away most of the embedding noise, so the copy approximates the
+    cover. For a clean image the ratio sits at an image-dependent level; LSB matching
+    lowers it. The ratio is a score, not a probability, and it varies more between
+    natural images than embedding moves it at small payloads, so it is most informative
+    when compared against the same image's cover.
+    """
+    arr = _load_rgb(image_path).astype(np.float64)
+    h, w = (arr.shape[0] // 2) * 2, (arr.shape[1] // 2) * 2
+    if h < 2 or w < 2:
+        raise ValueError("image is too small for HCF analysis")
+    ratios = []
+    for c in range(3):
+        channel = arr[:h, :w, c]
+        small = (channel[0::2, 0::2] + channel[1::2, 0::2] + channel[0::2, 1::2]
+                 + channel[1::2, 1::2]) / 4.0
+        full = _hcf_com(np.bincount(channel.astype(np.int64).ravel(), minlength=256))
+        down = _hcf_com(np.bincount(np.floor(small).astype(np.int64).ravel(), minlength=256))
+        ratios.append(full / down if down > 0 else 1.0)
+    return {"ratio": float(np.mean(ratios)), "per_channel": [float(r) for r in ratios]}
