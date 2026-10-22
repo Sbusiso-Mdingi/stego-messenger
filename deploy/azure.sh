@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Build the image in ACR and roll out the Streamlit UI to Azure App Service.
+# Build the image in ACR and roll out the web preview to Azure App Service.
 #
 # Mirrors the JSE dashboards: Linux App Service (Free F1 plan) in the shared
 # previews resource group, pulling from ACR with the web app's managed identity
