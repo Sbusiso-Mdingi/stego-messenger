@@ -2,6 +2,24 @@
 
 All notable changes are documented here.
 
+## [Unreleased]
+
+### Added
+- The `robust` method (`src/robust.py`, extra `robust`): a pre-shaped quality-75 JPEG cover,
+  QIM on luma DCT coefficients at password-keyed positions, a 7-times repeated length
+  header and interleaved Reed-Solomon codewords, carrying the same sealed blob as `seal`.
+- `make_blob` and `open_blob` in `src/package.py`, shared by both carriers.
+- A pre-registered protocol (`docs/robust_protocol.md`), the development run
+  (`src/robust_dev.py`), the test pool draw (`src/robust_pool.py`) and scoring
+  (`src/robust_test.py`), with results in `docs/robust/`.
+
+### Measured
+- Through the WhatsApp iPhone app (standard quality; iPhone 16 Pro, iOS 27.0.1, WhatsApp
+  2.26.45.75): 30 of 30 140-byte messages recovered from the author's photos, a one-sided
+  95% lower bound of 90.5%. Worst-cover PSNR 50.4 dB and SSIM 0.993 against the cover.
+- WhatsApp's quantisation table depends on the input: the QIM step-2 configuration failed
+  0 of 10 real sends; step 6 recovered 10 of 10 and was the one tested.
+
 ## [0.4.0] - 2026-10-22
 
 ### Added

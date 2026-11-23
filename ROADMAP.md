@@ -30,8 +30,11 @@
 
 ## v0.5: Robust embedding experiments
 
-- [ ] Implement a documented transform-domain baseline (DCT or DWT)
-- [ ] Add error-correcting codes and quantify capacity/robustness trade-offs
+- [x] Implement a documented transform-domain method (DCT-coefficient QIM, `robust`)
+- [x] Add error-correcting codes and quantify capacity/robustness trade-offs (Reed-Solomon,
+      pre-registered test through the WhatsApp iPhone app: 30 of 30 recovered)
+- [ ] Measure the `robust` method on more channels (WhatsApp Web, Android, HD mode)
+- [ ] Add a JPEG-domain detector to set against the `robust` method
 - [ ] Add a learned steganalysis classifier on labelled cover/stego datasets, calibrated
       against the structural detectors already implemented
 - [ ] Publish reproducible experiment notebooks/reports

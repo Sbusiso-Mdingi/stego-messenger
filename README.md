@@ -2,7 +2,7 @@
 
 **An open-source research toolkit for evaluating encrypted image steganography.**
 
-Stego Messenger combines authenticated encryption, two LSB embedding methods, deterministic image transformations, and reproducible evaluation metrics. The project's differentiator is not a claim that messages are undetectable or transformation-resistant; it is a framework for **measuring** capacity, distortion, recovery, and detectability under explicit experimental conditions.
+Stego Messenger combines authenticated encryption, two LSB embedding methods, a JPEG-domain method that survives WhatsApp photos, deterministic image transformations, and reproducible evaluation metrics. The project's differentiator is not a claim that messages are undetectable or survive any transformation; it is a framework for **measuring** capacity, distortion, recovery, and detectability under explicit experimental conditions.
 
 > **Status:** experimental research software. Not a production secure-messaging service and not a guarantee of covert or undetectable communication.
 
@@ -20,6 +20,12 @@ Stego Messenger combines authenticated encryption, two LSB embedding methods, de
   - `keyed` (default): LSB matching (+1 or -1) at positions from a password-seeded
     permutation, so changes are scattered across the image.
 - Capacity validation before embedding; lossless PNG output.
+- **A `robust` method for WhatsApp photos** (`src/robust.py`): the cover is pre-shaped to
+  what the WhatsApp iPhone app sends (long side at most 1,280 px, whole 16 px blocks, a
+  standard quality-75 JPEG), and the sealed blob goes into luma DCT coefficients by
+  quantisation index modulation, behind a repeated length header and interleaved
+  Reed-Solomon codes. The output is a JPEG, and the image and password are all extraction
+  needs.
 - Deterministic JPEG, Gaussian-noise, centre-crop, and resize transformations.
 - MSE, PSNR, SSIM, bit-error rate (BER), payload capacity utilisation, and LSB-plane diagnostics.
 - **Three steganalysis detectors**: the Westfeld-Pfitzmann chi-square attack and
@@ -33,11 +39,11 @@ Stego Messenger combines authenticated encryption, two LSB embedding methods, de
 
 ## What it does **not** implement
 
-- DCT or DWT embedding.
-- Error-correcting codes or adaptive (content-aware) embedding.
+- DWT embedding, or error correction for the two LSB methods.
+- Adaptive (content-aware) embedding.
 - A learned (machine-learned) steganalysis classifier; the detectors here are the classical
   structural and histogram ones.
-- Guaranteed survival under lossy transformations.
+- Survival under lossy transformations other than the one measured channel below.
 - Network transport, covert command-and-control, or a production messaging protocol.
 
 Those distinctions are deliberate: measured results and implemented features should be clearly separated from planned research.
@@ -65,8 +71,44 @@ The results worth stating plainly:
 - **It is not undetectable.** HCF-COM, built for matching, moves steadily with keyed
   payload size, and learned detectors are stronger still. AES-256-GCM protects the content;
   no method here guarantees nobody can tell a message is there.
-- Recovery is exact only on the lossless PNG carrier; JPEG, noise, cropping and resizing
-  destroy the payload.
+- Recovery for the LSB methods is exact only on the lossless PNG carrier; JPEG, noise,
+  cropping and resizing destroy the payload.
+
+### The `robust` method through WhatsApp
+
+A PNG sent as a WhatsApp photo comes back as a JPEG and the LSB payload is gone. The
+`robust` method was built for that route under a protocol written and frozen before the
+test ([`docs/robust_protocol.md`](docs/robust_protocol.md), hashes in
+[`docs/robust_protocol.sha1`](docs/robust_protocol.sha1)). Development used ten images and
+a simulated channel to choose the parameters, then two real confirmations; the final test
+used 30 of the author's own iPhone photos (15 smooth, 15 textured) drawn by a fixed seed,
+each with a 140-byte message, each sent once.
+
+The channel: Mac to iPhone by AirDrop, sent as a standard-quality photo through the
+WhatsApp iPhone app, saved and AirDropped back. iPhone 16 Pro, iOS 27.0.1, WhatsApp
+2.26.45.75, November 2026.
+
+| Measure | Result |
+| --- | --- |
+| Messages recovered exactly | 30 of 30 (smooth 15, textured 15) |
+| Lower bound on the recovery rate, one-sided 95% | 90.5% |
+| Bit error rate before error correction | 0.07% |
+| PSNR / SSIM of stego against cover, luma, worst cover | 50.4 dB / 0.993 |
+| PSNR of the pre-shaped cover against the resized original, worst cover | 34.6 dB |
+| Message capacity per photo | 9,976 to 17,872 bytes (median 13,360) |
+| Share of embedded bits that is header or Reed-Solomon parity | 53% |
+
+What the test found along the way: WhatsApp's quantisation table depends on the image it
+is given. The first configuration chosen in simulation (QIM step 2) failed all ten real
+confirmation sends, because WhatsApp re-encoded those inputs with a finer table than the
+standard quality-75 one. The next configuration in the frozen order (step 6) passed and
+was the one tested. Repeat sends of the same file came back byte-identical.
+
+The result holds for that route and those versions only. Android, HD mode, other apps and
+later WhatsApp versions are not measured. The detectors in this repository are built for
+LSB methods and say little about JPEG-domain embedding, so nothing here claims the
+`robust` method is hard to detect. Results and per-cover figures are in
+[`docs/robust/`](docs/robust/); the test photos are not published.
 
 ## Evaluation-first workflow
 
@@ -78,7 +120,7 @@ The results worth stating plainly:
 6. Run the detectors on cover and stego.
 7. Apply controlled transformations and record recovery success and BER instead of assuming robustness.
 
-See [`ROADMAP.md`](ROADMAP.md) for the remaining milestones: transform-domain baselines, error-correcting codes, and a learned steganalysis classifier.
+See [`ROADMAP.md`](ROADMAP.md) for the remaining milestones: more channels for the `robust` method, a JPEG-domain detector, and a learned steganalysis classifier.
 
 ## Installation
 
@@ -103,6 +145,17 @@ from src.package import seal, open_package
 
 seal("cover.png", "meet at the station", "research-passphrase", "stego.png", method="keyed")
 open_package("stego.png", "research-passphrase")   # ("meet at the station", "keyed")
+```
+
+For WhatsApp, the `robust` method takes any image and writes a JPEG
+(`pip install -e '.[robust]'`):
+
+```python
+from src.robust import Config, seal, open_robust
+
+cfg = Config(Z=9, k=6, m=159)   # the tested configuration
+seal("photo.png", "meet at the station", "research-passphrase", "stego.jpg", cfg)
+open_robust("received.jpg", "research-passphrase", cfg)   # "meet at the station"
 ```
 
 The lower-level pieces remain available: `src.crypto_utils` for AES-GCM and scrypt, and
@@ -152,12 +205,14 @@ Contributions should include reproducible parameters and tests. See [`CONTRIBUTI
 
 ```text
 src/                  cryptography, embedding, attacks, steganalysis, evaluation, benchmark
+src/robust*.py        the robust method, its development run, pool draw and test scoring
 web/service/          FastAPI service behind the live preview
 web/dashboard/        React preview page, embeddable in mdingi.co.za
 deploy/               Azure App Service deployment script
 tests/                automated test suite
 .github/workflows/     continuous integration
 docs/benchmarks/       benchmark results (JSON, CSV) and notes
+docs/robust_protocol.md  the robust method's protocol; results in docs/robust/
 docs/releases/         versioned release notes
 ROADMAP.md             planned research milestones
 ```
