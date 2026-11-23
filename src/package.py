@@ -48,6 +48,25 @@ def position_key(password: str) -> bytes:
     return derive_key_from_password(password, POSITION_SALT)
 
 
+def make_blob(message: str, password: str, padding: int = 0) -> bytes:
+    """The format-3 blob for ``message``: prefix, random salt and AES-GCM token."""
+    text = message.encode("utf-8")
+    salt = os.urandom(SALT_SIZE)
+    key = derive_key_from_password(password, salt)
+    plaintext = len(text).to_bytes(4, "big") + text + os.urandom(padding)
+    log_n = DEFAULT_SCRYPT_N.bit_length() - 1
+    return (
+        _PREFIX.pack(FORMAT_VERSION, log_n, DEFAULT_SCRYPT_R, DEFAULT_SCRYPT_P)
+        + salt
+        + encrypt_bytes(plaintext, key)
+    )
+
+
+def open_blob(blob: bytes, password: str) -> str:
+    """Decrypt a format-3 blob. Raises ``ValueError`` for a wrong password or damage."""
+    return _open_blob(blob, password)
+
+
 def max_message_bytes(cover_path: str | Path) -> int:
     """Largest UTF-8 message that fits in the cover."""
     return max(0, capacity_bytes(cover_path) - OVERHEAD)
@@ -73,16 +92,7 @@ def seal(
     if len(text) > room:
         raise ValueError(f"message is {len(text)} bytes but this image holds at most {max(0, room)}")
     padding = max(0, min(room, round(capacity * fill) - OVERHEAD) - len(text))
-
-    salt = os.urandom(SALT_SIZE)
-    key = derive_key_from_password(password, salt)
-    plaintext = len(text).to_bytes(4, "big") + text + os.urandom(padding)
-    log_n = DEFAULT_SCRYPT_N.bit_length() - 1
-    blob = (
-        _PREFIX.pack(FORMAT_VERSION, log_n, DEFAULT_SCRYPT_R, DEFAULT_SCRYPT_P)
-        + salt
-        + encrypt_bytes(plaintext, key)
-    )
+    blob = make_blob(message, password, padding)
     embed_data(
         cover_path,
         blob,

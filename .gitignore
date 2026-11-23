@@ -19,3 +19,6 @@ secure_stego.png
 # Regenerated public-domain benchmark corpus (results are kept)
 docs/benchmarks/*/corpus/
 node_modules/
+
+# Own photos for the robust test: never committed
+data/test_pool/

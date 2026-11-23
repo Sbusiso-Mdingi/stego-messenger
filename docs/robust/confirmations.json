@@ -1,0 +1,341 @@
+{
+ "device": "iPhone 16 Pro",
+ "ios": "27.0.1",
+ "whatsapp": "2.26.45.75",
+ "route": "Mac -> AirDrop -> iPhone Photos -> WhatsApp iPhone app, standard quality, own chat -> save to Photos -> AirDrop -> Mac",
+ "seed": 20261123,
+ "message_bytes": 140,
+ "blob_bytes": 192,
+ "confirmations": [
+  {
+   "n": 1,
+   "config": [
+    14,
+    2,
+    127
+   ],
+   "date": "2026-11-24",
+   "recovered": 0,
+   "of": 10,
+   "repeat_send_identical": true,
+   "direct_airdrop_route_identical": true,
+   "note": "WhatsApp re-encoded these inputs with a finer non-standard luma table (first row 4 5 9 9 ...), not the standard quality-75 table seen for PNG inputs.",
+   "files": [
+    {
+     "match": "c01",
+     "size": "512x512",
+     "luma_qt": [
+      4,
+      5,
+      9,
+      9
+     ],
+     "recovered": false,
+     "bit_errors": 542,
+     "coded_bits": 3808,
+     "error": "too many errors to correct"
+    },
+    {
+     "match": "c02",
+     "size": "592x400",
+     "luma_qt": [
+      4,
+      5,
+      9,
+      9
+     ],
+     "recovered": false,
+     "bit_errors": 458,
+     "coded_bits": 3808,
+     "error": "too many errors to correct"
+    },
+    {
+     "match": "c02",
+     "size": "592x400",
+     "luma_qt": [
+      4,
+      5,
+      9,
+      9
+     ],
+     "recovered": false,
+     "bit_errors": 458,
+     "coded_bits": 3808,
+     "error": "too many errors to correct"
+    },
+    {
+     "match": "c03",
+     "size": "448x288",
+     "luma_qt": [
+      4,
+      5,
+      9,
+      9
+     ],
+     "recovered": false,
+     "bit_errors": 568,
+     "coded_bits": 3808,
+     "error": "too many errors to correct"
+    },
+    {
+     "match": "c04",
+     "size": "1280x1280",
+     "luma_qt": [
+      4,
+      5,
+      9,
+      9
+     ],
+     "recovered": false,
+     "bit_errors": 388,
+     "coded_bits": 3808,
+     "error": "too many errors to correct"
+    },
+    {
+     "match": "c05",
+     "size": "1280x848",
+     "luma_qt": [
+      4,
+      5,
+      9,
+      9
+     ],
+     "recovered": false,
+     "bit_errors": 289,
+     "coded_bits": 3808,
+     "error": "too many errors to correct"
+    },
+    {
+     "match": "c06",
+     "size": "1280x848",
+     "luma_qt": [
+      4,
+      5,
+      9,
+      9
+     ],
+     "recovered": false,
+     "bit_errors": 257,
+     "coded_bits": 3808,
+     "error": "too many errors to correct"
+    },
+    {
+     "match": "c07",
+     "size": "1280x848",
+     "luma_qt": [
+      4,
+      5,
+      9,
+      9
+     ],
+     "recovered": false,
+     "bit_errors": 672,
+     "coded_bits": 3808,
+     "error": "no robust payload found"
+    },
+    {
+     "match": "c08",
+     "size": "1280x960",
+     "luma_qt": [
+      4,
+      5,
+      9,
+      9
+     ],
+     "recovered": false,
+     "bit_errors": 280,
+     "coded_bits": 3808,
+     "error": "too many errors to correct"
+    },
+    {
+     "match": "c09",
+     "size": "1280x1280",
+     "luma_qt": [
+      4,
+      5,
+      9,
+      9
+     ],
+     "recovered": false,
+     "bit_errors": 940,
+     "coded_bits": 3808,
+     "error": "no robust payload found"
+    },
+    {
+     "match": "c10",
+     "size": "1280x720",
+     "luma_qt": [
+      4,
+      5,
+      9,
+      9
+     ],
+     "recovered": false,
+     "bit_errors": 233,
+     "coded_bits": 3808,
+     "error": "too many errors to correct"
+    }
+   ]
+  },
+  {
+   "n": 2,
+   "config": [
+    9,
+    6,
+    159
+   ],
+   "date": "2026-11-24",
+   "recovered": 10,
+   "of": 10,
+   "repeat_send_identical": true,
+   "note": "Standard quality-75 luma table.",
+   "files": [
+    {
+     "match": "d01",
+     "size": "512x512",
+     "luma_qt": [
+      8,
+      6,
+      5,
+      8
+     ],
+     "recovered": true,
+     "bit_errors": 66,
+     "coded_bits": 3296
+    },
+    {
+     "match": "d02",
+     "size": "592x400",
+     "luma_qt": [
+      8,
+      6,
+      5,
+      8
+     ],
+     "recovered": true,
+     "bit_errors": 4,
+     "coded_bits": 3296
+    },
+    {
+     "match": "d02",
+     "size": "592x400",
+     "luma_qt": [
+      8,
+      6,
+      5,
+      8
+     ],
+     "recovered": true,
+     "bit_errors": 4,
+     "coded_bits": 3296
+    },
+    {
+     "match": "d03",
+     "size": "448x288",
+     "luma_qt": [
+      8,
+      6,
+      5,
+      8
+     ],
+     "recovered": true,
+     "bit_errors": 0,
+     "coded_bits": 3296
+    },
+    {
+     "match": "d04",
+     "size": "1280x1280",
+     "luma_qt": [
+      8,
+      6,
+      5,
+      8
+     ],
+     "recovered": true,
+     "bit_errors": 57,
+     "coded_bits": 3296
+    },
+    {
+     "match": "d05",
+     "size": "1280x848",
+     "luma_qt": [
+      8,
+      6,
+      5,
+      8
+     ],
+     "recovered": true,
+     "bit_errors": 0,
+     "coded_bits": 3296
+    },
+    {
+     "match": "d06",
+     "size": "1280x848",
+     "luma_qt": [
+      8,
+      6,
+      5,
+      8
+     ],
+     "recovered": true,
+     "bit_errors": 0,
+     "coded_bits": 3296
+    },
+    {
+     "match": "d07",
+     "size": "1280x848",
+     "luma_qt": [
+      8,
+      6,
+      5,
+      8
+     ],
+     "recovered": true,
+     "bit_errors": 0,
+     "coded_bits": 3296
+    },
+    {
+     "match": "d08",
+     "size": "1280x960",
+     "luma_qt": [
+      8,
+      6,
+      5,
+      8
+     ],
+     "recovered": true,
+     "bit_errors": 0,
+     "coded_bits": 3296
+    },
+    {
+     "match": "d09",
+     "size": "1280x1280",
+     "luma_qt": [
+      8,
+      6,
+      5,
+      8
+     ],
+     "recovered": true,
+     "bit_errors": 0,
+     "coded_bits": 3296
+    },
+    {
+     "match": "d10",
+     "size": "1280x720",
+     "luma_qt": [
+      8,
+      6,
+      5,
+      8
+     ],
+     "recovered": true,
+     "bit_errors": 2,
+     "coded_bits": 3296
+    }
+   ]
+  }
+ ],
+ "real_sends_used": 22,
+ "real_sends_allowed": 33
+}
