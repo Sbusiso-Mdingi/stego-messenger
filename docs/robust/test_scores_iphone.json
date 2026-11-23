@@ -1,0 +1,1970 @@
+{
+ "config": [
+  9,
+  6,
+  159
+ ],
+ "received_dir": "/Volumes/Storage/Developer Archive/stego-messenger/data/test_pool/run/received",
+ "recovered": 30,
+ "of": 30,
+ "passes": true,
+ "quality_budget_met": true,
+ "ber": 0.0007382686084142395,
+ "header_bit_errors": 4,
+ "header_bits": 6720,
+ "overhead_share": 0.5339805825242718,
+ "not_received": [],
+ "other_files": [],
+ "results": {
+  "t01": {
+   "name": "t01",
+   "group": "smooth",
+   "capacity_bytes": 13412,
+   "sealed": true,
+   "recovered": true,
+   "received": "IMG_4329.JPG",
+   "pixel_rmse": 0.05901296791337006,
+   "bit_errors": 0,
+   "coded_bits": 3296,
+   "header_bit_errors": 0,
+   "psnr": 51.593247789479186,
+   "ssim": 0.9951758526748857,
+   "preshape_psnr": 40.87153575522027,
+   "preshape_ssim": 0.9663286180646187,
+   "plaintext_capacity_bytes": 13360,
+   "detectors": {
+    "covers": {
+     "chi_square": {
+      "mean_embedding_probability": 5.519386011749425e-06,
+      "max_embedding_probability": 0.0003530346732308657,
+      "flagged_block_fraction": 0.0
+     },
+     "rs": {
+      "regular_groups": 0.5558973524305556,
+      "singular_groups": 0.09778862847222224,
+      "regular_groups_dual": 0.5588476562500001,
+      "singular_groups_dual": 0.09669813368055556,
+      "estimated_embedding_rate": 0.004698290670357676,
+      "reliable": true
+     },
+     "hcf": {
+      "ratio": 1.036296522221557,
+      "per_channel": [
+       1.1303198414211486,
+       0.9867660212841469,
+       0.9918037039593759
+      ]
+     }
+    },
+    "send": {
+     "chi_square": {
+      "mean_embedding_probability": 2.7465488511987974e-05,
+      "max_embedding_probability": 0.0017245568671375672,
+      "flagged_block_fraction": 0.0
+     },
+     "rs": {
+      "regular_groups": 0.5482834201388888,
+      "singular_groups": 0.10005750868055556,
+      "regular_groups_dual": 0.551494140625,
+      "singular_groups_dual": 0.09880425347222221,
+      "estimated_embedding_rate": 0.0053166908928789815,
+      "reliable": true
+     },
+     "hcf": {
+      "ratio": 1.0268130721357722,
+      "per_channel": [
+       1.103458597267576,
+       0.985730928238046,
+       0.9912496909016948
+      ]
+     }
+    }
+   }
+  },
+  "t02": {
+   "name": "t02",
+   "group": "smooth",
+   "capacity_bytes": 10028,
+   "sealed": true,
+   "recovered": true,
+   "received": "IMG_4330.JPG",
+   "pixel_rmse": 0.6259521104367212,
+   "bit_errors": 1,
+   "coded_bits": 3296,
+   "header_bit_errors": 0,
+   "psnr": 50.6563924114587,
+   "ssim": 0.993480947175784,
+   "preshape_psnr": 44.06838863846723,
+   "preshape_ssim": 0.978634372596461,
+   "plaintext_capacity_bytes": 9976,
+   "detectors": {
+    "covers": {
+     "chi_square": {
+      "mean_embedding_probability": 0.010642250305026807,
+      "max_embedding_probability": 0.31519896047598683,
+      "flagged_block_fraction": 0.0
+     },
+     "rs": {
+      "regular_groups": 0.5379441550925926,
+      "singular_groups": 0.06366608796296296,
+      "regular_groups_dual": 0.5442549189814815,
+      "singular_groups_dual": 0.06309027777777777,
+      "estimated_embedding_rate": 0.00803226266035092,
+      "reliable": true
+     },
+     "hcf": {
+      "ratio": 0.9762539958536421,
+      "per_channel": [
+       0.9809426068791184,
+       0.9692460184287315,
+       0.9785733622530767
+      ]
+     }
+    },
+    "send": {
+     "chi_square": {
+      "mean_embedding_probability": 0.012745546187907216,
+      "max_embedding_probability": 0.3198084991351338,
+      "flagged_block_fraction": 0.0
+     },
+     "rs": {
+      "regular_groups": 0.5293981481481481,
+      "singular_groups": 0.0674146412037037,
+      "regular_groups_dual": 0.5364814814814814,
+      "singular_groups_dual": 0.06663194444444444,
+      "estimated_embedding_rate": 0.009427024472366199,
+      "reliable": true
+     },
+     "hcf": {
+      "ratio": 0.9789113660243088,
+      "per_channel": [
+       0.9871327587327754,
+       0.9810830295818892,
+       0.968518309758262
+      ]
+     }
+    }
+   }
+  },
+  "t03": {
+   "name": "t03",
+   "group": "smooth",
+   "capacity_bytes": 14310,
+   "sealed": true,
+   "recovered": true,
+   "received": "IMG_4331.JPG",
+   "pixel_rmse": 0.09412495547323538,
+   "bit_errors": 0,
+   "coded_bits": 3296,
+   "header_bit_errors": 0,
+   "psnr": 52.05131620536385,
+   "ssim": 0.9955901573376867,
+   "preshape_psnr": 37.55641783611577,
+   "preshape_ssim": 0.9292048957134708,
+   "plaintext_capacity_bytes": 14258,
+   "detectors": {
+    "covers": {
+     "chi_square": {
+      "mean_embedding_probability": 0.0036029641875020696,
+      "max_embedding_probability": 0.1481122518269589,
+      "flagged_block_fraction": 0.0
+     },
+     "rs": {
+      "regular_groups": 0.55526123046875,
+      "singular_groups": 0.119915771484375,
+      "regular_groups_dual": 0.5570902506510417,
+      "singular_groups_dual": 0.11940612792968748,
+      "estimated_embedding_rate": 0.0028652443526093543,
+      "reliable": true
+     },
+     "hcf": {
+      "ratio": 1.0218289393850497,
+      "per_channel": [
+       1.1117835173190185,
+       0.9541425617074747,
+       0.9995607391286562
+      ]
+     }
+    },
+    "send": {
+     "chi_square": {
+      "mean_embedding_probability": 0.004496067626176691,
+      "max_embedding_probability": 0.22207485508865937,
+      "flagged_block_fraction": 0.0
+     },
+     "rs": {
+      "regular_groups": 0.5496042887369792,
+      "singular_groups": 0.1219146728515625,
+      "regular_groups_dual": 0.552020263671875,
+      "singular_groups_dual": 0.12108459472656251,
+      "estimated_embedding_rate": 0.004059397301647054,
+      "reliable": true
+     },
+     "hcf": {
+      "ratio": 1.0393835093002528,
+      "per_channel": [
+       1.1190475969656464,
+       0.9877665525326472,
+       1.0113363784024652
+      ]
+     }
+    }
+   }
+  },
+  "t04": {
+   "name": "t04",
+   "group": "smooth",
+   "capacity_bytes": 13412,
+   "sealed": true,
+   "recovered": true,
+   "received": "IMG_4332.JPG",
+   "pixel_rmse": 0.1438499803276934,
+   "bit_errors": 8,
+   "coded_bits": 3296,
+   "header_bit_errors": 0,
+   "psnr": 51.60803643520707,
+   "ssim": 0.9946084377624784,
+   "preshape_psnr": 40.708893274422884,
+   "preshape_ssim": 0.9796746355551442,
+   "plaintext_capacity_bytes": 13360,
+   "detectors": {
+    "covers": {
+     "chi_square": {
+      "mean_embedding_probability": 1.0708111267163291e-32,
+      "max_embedding_probability": 6.852337760695984e-31,
+      "flagged_block_fraction": 0.0
+     },
+     "rs": {
+      "regular_groups": 0.6886295572916667,
+      "singular_groups": 0.07187608506944444,
+      "regular_groups_dual": 0.6955642361111112,
+      "singular_groups_dual": 0.06967881944444444,
+      "estimated_embedding_rate": 0.007608628284833142,
+      "reliable": true
+     },
+     "hcf": {
+      "ratio": 1.103467399613601,
+      "per_channel": [
+       1.1029851679443023,
+       1.0975611037515862,
+       1.1098559271449147
+      ]
+     }
+    },
+    "send": {
+     "chi_square": {
+      "mean_embedding_probability": 1.3546671314879674e-26,
+      "max_embedding_probability": 8.669846299044303e-25,
+      "flagged_block_fraction": 0.0
+     },
+     "rs": {
+      "regular_groups": 0.6752159288194445,
+      "singular_groups": 0.07462782118055555,
+      "regular_groups_dual": 0.6820496961805557,
+      "singular_groups_dual": 0.07223524305555555,
+      "estimated_embedding_rate": 0.007931585000863762,
+      "reliable": true
+     },
+     "hcf": {
+      "ratio": 1.1101315939871148,
+      "per_channel": [
+       1.1096904106877306,
+       1.1049417468983198,
+       1.1157626243752943
+      ]
+     }
+    }
+   }
+  },
+  "t05": {
+   "name": "t05",
+   "group": "smooth",
+   "capacity_bytes": 13412,
+   "sealed": true,
+   "recovered": true,
+   "received": "IMG_4333.JPG",
+   "pixel_rmse": 0.16464183427595186,
+   "bit_errors": 0,
+   "coded_bits": 3296,
+   "header_bit_errors": 0,
+   "psnr": 51.473332500684556,
+   "ssim": 0.9945809593084803,
+   "preshape_psnr": 40.167965463824615,
+   "preshape_ssim": 0.9450879149385731,
+   "plaintext_capacity_bytes": 13360,
+   "detectors": {
+    "covers": {
+     "chi_square": {
+      "mean_embedding_probability": 7.932238219728855e-06,
+      "max_embedding_probability": 0.0004982518921586636,
+      "flagged_block_fraction": 0.0
+     },
+     "rs": {
+      "regular_groups": 0.5667860243055555,
+      "singular_groups": 0.08526150173611109,
+      "regular_groups_dual": 0.5705740017361111,
+      "singular_groups_dual": 0.08380316840277778,
+      "estimated_embedding_rate": 0.006027169370549672,
+      "reliable": true
+     },
+     "hcf": {
+      "ratio": 1.023109689364446,
+      "per_channel": [
+       1.0950169393509834,
+       0.9483517710377009,
+       1.0259603577046534
+      ]
+     }
+    },
+    "send": {
+     "chi_square": {
+      "mean_embedding_probability": 0.00020541363188830586,
+      "max_embedding_probability": 0.00741807568008722,
+      "flagged_block_fraction": 0.0
+     },
+     "rs": {
+      "regular_groups": 0.5576736111111111,
+      "singular_groups": 0.08829644097222222,
+      "regular_groups_dual": 0.5619932725694444,
+      "singular_groups_dual": 0.08651801215277778,
+      "estimated_embedding_rate": 0.0071930377741762945,
+      "reliable": true
+     },
+     "hcf": {
+      "ratio": 1.044092020363253,
+      "per_channel": [
+       1.1134029197856203,
+       0.9616346112028635,
+       1.057238530101275
+      ]
+     }
+    }
+   }
+  },
+  "t06": {
+   "name": "t06",
+   "group": "smooth",
+   "capacity_bytes": 10028,
+   "sealed": true,
+   "recovered": true,
+   "received": "IMG_4334.JPG",
+   "pixel_rmse": 0.6706203293648407,
+   "bit_errors": 0,
+   "coded_bits": 3296,
+   "header_bit_errors": 0,
+   "psnr": 50.42843194790304,
+   "ssim": 0.993126777342119,
+   "preshape_psnr": 43.55180393835356,
+   "preshape_ssim": 0.9808932536943312,
+   "plaintext_capacity_bytes": 9976,
+   "detectors": {
+    "covers": {
+     "chi_square": {
+      "mean_embedding_probability": 0.022840069110105964,
+      "max_embedding_probability": 0.7997834373119963,
+      "flagged_block_fraction": 0.03125
+     },
+     "rs": {
+      "regular_groups": 0.6155295138888889,
+      "singular_groups": 0.06656539351851852,
+      "regular_groups_dual": 0.6156119791666668,
+      "singular_groups_dual": 0.0657421875,
+      "estimated_embedding_rate": 0.0008850346747707977,
+      "reliable": true
+     },
+     "hcf": {
+      "ratio": 1.0083204109230086,
+      "per_channel": [
+       1.0306021226201179,
+       0.9771897035621112,
+       1.0171694065867969
+      ]
+     }
+    },
+    "send": {
+     "chi_square": {
+      "mean_embedding_probability": 0.0184633163165323,
+      "max_embedding_probability": 0.5394639622645852,
+      "flagged_block_fraction": 0.015625
+     },
+     "rs": {
+      "regular_groups": 0.6023842592592592,
+      "singular_groups": 0.06905092592592593,
+      "regular_groups_dual": 0.6024088541666667,
+      "singular_groups_dual": 0.0683912037037037,
+      "estimated_embedding_rate": 0.0006920882774837402,
+      "reliable": true
+     },
+     "hcf": {
+      "ratio": 1.010785526088845,
+      "per_channel": [
+       1.0292541702134541,
+       0.9888744837951501,
+       1.0142279242579306
+      ]
+     }
+    }
+   }
+  },
+  "t07": {
+   "name": "t07",
+   "group": "smooth",
+   "capacity_bytes": 17924,
+   "sealed": true,
+   "recovered": true,
+   "received": "IMG_4335.JPG",
+   "pixel_rmse": 0.08099167668784449,
+   "bit_errors": 0,
+   "coded_bits": 3296,
+   "header_bit_errors": 0,
+   "psnr": 53.20016646014586,
+   "ssim": 0.9962344220821914,
+   "preshape_psnr": 42.867704237086215,
+   "preshape_ssim": 0.9648173695131915,
+   "plaintext_capacity_bytes": 17872,
+   "detectors": {
+    "covers": {
+     "chi_square": {
+      "mean_embedding_probability": 1.83119190211974e-05,
+      "max_embedding_probability": 0.0010125582628685119,
+      "flagged_block_fraction": 0.0
+     },
+     "rs": {
+      "regular_groups": 0.5078605143229167,
+      "singular_groups": 0.06354329427083333,
+      "regular_groups_dual": 0.5113842773437499,
+      "singular_groups_dual": 0.06284749348958334,
+      "estimated_embedding_rate": 0.00563394731561566,
+      "reliable": true
+     },
+     "hcf": {
+      "ratio": 1.2358370667485377,
+      "per_channel": [
+       1.3307312644800247,
+       0.9556427048207515,
+       1.4211372309448365
+      ]
+     }
+    },
+    "send": {
+     "chi_square": {
+      "mean_embedding_probability": 9.0456386813646e-05,
+      "max_embedding_probability": 0.0033863784813483472,
+      "flagged_block_fraction": 0.0
+     },
+     "rs": {
+      "regular_groups": 0.5029044596354167,
+      "singular_groups": 0.06517903645833334,
+      "regular_groups_dual": 0.5065763346354166,
+      "singular_groups_dual": 0.06438232421875,
+      "estimated_embedding_rate": 0.006050150637235421,
+      "reliable": true
+     },
+     "hcf": {
+      "ratio": 1.2569513143077957,
+      "per_channel": [
+       1.373990669573997,
+       0.9597301449302591,
+       1.4371331284191309
+      ]
+     }
+    }
+   }
+  },
+  "t08": {
+   "name": "t08",
+   "group": "smooth",
+   "capacity_bytes": 10028,
+   "sealed": true,
+   "recovered": true,
+   "received": "IMG_4336.JPG",
+   "pixel_rmse": 0.6531333066989039,
+   "bit_errors": 0,
+   "coded_bits": 3296,
+   "header_bit_errors": 0,
+   "psnr": 50.613614636356104,
+   "ssim": 0.9943226788253048,
+   "preshape_psnr": 41.77185074396091,
+   "preshape_ssim": 0.9717417114409406,
+   "plaintext_capacity_bytes": 9976,
+   "detectors": {
+    "covers": {
+     "chi_square": {
+      "mean_embedding_probability": 0.16413726783831512,
+      "max_embedding_probability": 0.9999304985953975,
+      "flagged_block_fraction": 0.171875
+     },
+     "rs": {
+      "regular_groups": 0.5170905671296296,
+      "singular_groups": 0.11801070601851853,
+      "regular_groups_dual": 0.5176620370370371,
+      "singular_groups_dual": 0.11725983796296297,
+      "estimated_embedding_rate": 0.0017893262511483685,
+      "reliable": true
+     },
+     "hcf": {
+      "ratio": 0.9950069370469814,
+      "per_channel": [
+       1.0025295555313187,
+       0.987001668380983,
+       0.9954895872286422
+      ]
+     }
+    },
+    "send": {
+     "chi_square": {
+      "mean_embedding_probability": 0.16410973662483458,
+      "max_embedding_probability": 0.99989333992797,
+      "flagged_block_fraction": 0.171875
+     },
+     "rs": {
+      "regular_groups": 0.509603587962963,
+      "singular_groups": 0.1197583912037037,
+      "regular_groups_dual": 0.5105063657407408,
+      "singular_groups_dual": 0.11919704861111112,
+      "estimated_embedding_rate": 0.002037657217488367,
+      "reliable": true
+     },
+     "hcf": {
+      "ratio": 1.0089635804476078,
+      "per_channel": [
+       1.0127311854752705,
+       1.004503451378515,
+       1.009656104489038
+      ]
+     }
+    }
+   }
+  },
+  "t09": {
+   "name": "t09",
+   "group": "smooth",
+   "capacity_bytes": 13412,
+   "sealed": true,
+   "recovered": true,
+   "received": "IMG_4337.JPG",
+   "pixel_rmse": 0.06094640248361214,
+   "bit_errors": 2,
+   "coded_bits": 3296,
+   "header_bit_errors": 0,
+   "psnr": 51.50740875853088,
+   "ssim": 0.994120113599648,
+   "preshape_psnr": 38.73175770083462,
+   "preshape_ssim": 0.9532904134859791,
+   "plaintext_capacity_bytes": 13360,
+   "detectors": {
+    "covers": {
+     "chi_square": {
+      "mean_embedding_probability": 3.940349922842231e-06,
+      "max_embedding_probability": 0.00016297724939729068,
+      "flagged_block_fraction": 0.0
+     },
+     "rs": {
+      "regular_groups": 0.6696625434027778,
+      "singular_groups": 0.07831922743055554,
+      "regular_groups_dual": 0.67201171875,
+      "singular_groups_dual": 0.0772873263888889,
+      "estimated_embedding_rate": 0.0030045265480101767,
+      "reliable": true
+     },
+     "hcf": {
+      "ratio": 1.064415878050273,
+      "per_channel": [
+       1.0573270832592072,
+       1.0546321185127228,
+       1.0812884323788896
+      ]
+     }
+    },
+    "send": {
+     "chi_square": {
+      "mean_embedding_probability": 4.560303567482298e-05,
+      "max_embedding_probability": 0.0025802089142037696,
+      "flagged_block_fraction": 0.0
+     },
+     "rs": {
+      "regular_groups": 0.6600184461805556,
+      "singular_groups": 0.08126193576388889,
+      "regular_groups_dual": 0.6620996093750001,
+      "singular_groups_dual": 0.08068359375,
+      "estimated_embedding_rate": 0.002428059507800534,
+      "reliable": true
+     },
+     "hcf": {
+      "ratio": 1.062850025281657,
+      "per_channel": [
+       1.0611128659820868,
+       1.0463891750370407,
+       1.081048034825844
+      ]
+     }
+    }
+   }
+  },
+  "t10": {
+   "name": "t10",
+   "group": "smooth",
+   "capacity_bytes": 17924,
+   "sealed": true,
+   "recovered": true,
+   "received": "IMG_4338.JPG",
+   "pixel_rmse": 0.259767289311711,
+   "bit_errors": 1,
+   "coded_bits": 3296,
+   "header_bit_errors": 1,
+   "psnr": 52.70495851722903,
+   "ssim": 0.9956027553396908,
+   "preshape_psnr": 43.204599098557466,
+   "preshape_ssim": 0.9786720689648492,
+   "plaintext_capacity_bytes": 17872,
+   "detectors": {
+    "covers": {
+     "chi_square": {
+      "mean_embedding_probability": 0.00010301528982903863,
+      "max_embedding_probability": 0.006592978548334404,
+      "flagged_block_fraction": 0.0
+     },
+     "rs": {
+      "regular_groups": 0.6923640950520834,
+      "singular_groups": 0.042044270833333335,
+      "regular_groups_dual": 0.6969767252604168,
+      "singular_groups_dual": 0.04004313151041666,
+      "estimated_embedding_rate": 0.005284763860224484,
+      "reliable": true
+     },
+     "hcf": {
+      "ratio": 1.059919302198234,
+      "per_channel": [
+       1.1070507751242724,
+       1.0185480405090872,
+       1.054159090961342
+      ]
+     }
+    },
+    "send": {
+     "chi_square": {
+      "mean_embedding_probability": 0.00010880883486270007,
+      "max_embedding_probability": 0.006963765372911017,
+      "flagged_block_fraction": 0.0
+     },
+     "rs": {
+      "regular_groups": 0.6819490559895832,
+      "singular_groups": 0.04438395182291666,
+      "regular_groups_dual": 0.6874055989583333,
+      "singular_groups_dual": 0.04222330729166667,
+      "estimated_embedding_rate": 0.00622285063781472,
+      "reliable": true
+     },
+     "hcf": {
+      "ratio": 1.0742303741900165,
+      "per_channel": [
+       1.1498444153496643,
+       1.019838174610305,
+       1.0530085326100806
+      ]
+     }
+    }
+   }
+  },
+  "t11": {
+   "name": "t11",
+   "group": "smooth",
+   "capacity_bytes": 13412,
+   "sealed": true,
+   "recovered": true,
+   "received": "IMG_4339.JPG",
+   "pixel_rmse": 0.27751620714058206,
+   "bit_errors": 0,
+   "coded_bits": 3296,
+   "header_bit_errors": 0,
+   "psnr": 51.88753900813782,
+   "ssim": 0.9952055722393434,
+   "preshape_psnr": 40.48742758271111,
+   "preshape_ssim": 0.9507727448007056,
+   "plaintext_capacity_bytes": 13360,
+   "detectors": {
+    "covers": {
+     "chi_square": {
+      "mean_embedding_probability": 6.982815542427853e-05,
+      "max_embedding_probability": 0.0029760646540515716,
+      "flagged_block_fraction": 0.0
+     },
+     "rs": {
+      "regular_groups": 0.5346603732638889,
+      "singular_groups": 0.08502170138888888,
+      "regular_groups_dual": 0.544958767361111,
+      "singular_groups_dual": 0.08330729166666667,
+      "estimated_embedding_rate": 0.014257121358659187,
+      "reliable": true
+     },
+     "hcf": {
+      "ratio": 1.0282823969388362,
+      "per_channel": [
+       1.0836427766183867,
+       0.9945751941713387,
+       1.0066292200267826
+      ]
+     }
+    },
+    "send": {
+     "chi_square": {
+      "mean_embedding_probability": 5.5692472174568285e-05,
+      "max_embedding_probability": 0.0033855485838220323,
+      "flagged_block_fraction": 0.0
+     },
+     "rs": {
+      "regular_groups": 0.5277029079861112,
+      "singular_groups": 0.08711480034722223,
+      "regular_groups_dual": 0.5374739583333333,
+      "singular_groups_dual": 0.08544921875,
+      "estimated_embedding_rate": 0.013906323157664548,
+      "reliable": true
+     },
+     "hcf": {
+      "ratio": 1.0323819937112086,
+      "per_channel": [
+       1.090907736985266,
+       1.0005966835358004,
+       1.0056415606125595
+      ]
+     }
+    }
+   }
+  },
+  "t12": {
+   "name": "t12",
+   "group": "smooth",
+   "capacity_bytes": 10028,
+   "sealed": true,
+   "recovered": true,
+   "received": "IMG_4340.JPG",
+   "pixel_rmse": 0.42790106335828165,
+   "bit_errors": 0,
+   "coded_bits": 3296,
+   "header_bit_errors": 0,
+   "psnr": 50.473602521288754,
+   "ssim": 0.9933870160849654,
+   "preshape_psnr": 43.45672420718734,
+   "preshape_ssim": 0.9769663797263569,
+   "plaintext_capacity_bytes": 9976,
+   "detectors": {
+    "covers": {
+     "chi_square": {
+      "mean_embedding_probability": 0.0988729378668445,
+      "max_embedding_probability": 0.9935644000855867,
+      "flagged_block_fraction": 0.109375
+     },
+     "rs": {
+      "regular_groups": 0.5272193287037036,
+      "singular_groups": 0.06921730324074075,
+      "regular_groups_dual": 0.5311429398148149,
+      "singular_groups_dual": 0.06844762731481481,
+      "estimated_embedding_rate": 0.005678014711436296,
+      "reliable": true
+     },
+     "hcf": {
+      "ratio": 1.0066438407182756,
+      "per_channel": [
+       1.0612677051714174,
+       0.9970117192135206,
+       0.9616520977698884
+      ]
+     }
+    },
+    "send": {
+     "chi_square": {
+      "mean_embedding_probability": 0.11641502007709778,
+      "max_embedding_probability": 0.9956585232292611,
+      "flagged_block_fraction": 0.125
+     },
+     "rs": {
+      "regular_groups": 0.5175810185185185,
+      "singular_groups": 0.07235966435185186,
+      "regular_groups_dual": 0.5214438657407409,
+      "singular_groups_dual": 0.07133825231481482,
+      "estimated_embedding_rate": 0.006099863783438228,
+      "reliable": true
+     },
+     "hcf": {
+      "ratio": 1.0008717851491145,
+      "per_channel": [
+       1.0591037628452933,
+       0.9450883607883153,
+       0.9984232318137348
+      ]
+     }
+    }
+   }
+  },
+  "t13": {
+   "name": "t13",
+   "group": "smooth",
+   "capacity_bytes": 15668,
+   "sealed": true,
+   "recovered": true,
+   "received": "IMG_4328.JPG",
+   "pixel_rmse": 0.4260032800846223,
+   "bit_errors": 0,
+   "coded_bits": 3296,
+   "header_bit_errors": 0,
+   "psnr": 52.54060694397385,
+   "ssim": 0.996049220431189,
+   "preshape_psnr": 40.24798946278115,
+   "preshape_ssim": 0.9678611559783558,
+   "plaintext_capacity_bytes": 15616,
+   "detectors": {
+    "covers": {
+     "chi_square": {
+      "mean_embedding_probability": 7.1073877495339126e-09,
+      "max_embedding_probability": 4.54872802632839e-07,
+      "flagged_block_fraction": 0.0
+     },
+     "rs": {
+      "regular_groups": 0.5373604910714286,
+      "singular_groups": 0.09278459821428571,
+      "regular_groups_dual": 0.5494931175595238,
+      "singular_groups_dual": 0.08726841517857142,
+      "estimated_embedding_rate": 0.020868212045202773,
+      "reliable": true
+     },
+     "hcf": {
+      "ratio": 1.628286371438347,
+      "per_channel": [
+       2.0626426672969305,
+       0.9857744722592852,
+       1.8364419747588256
+      ]
+     }
+    },
+    "send": {
+     "chi_square": {
+      "mean_embedding_probability": 4.2709113743046415e-09,
+      "max_embedding_probability": 2.7333814718454597e-07,
+      "flagged_block_fraction": 0.0
+     },
+     "rs": {
+      "regular_groups": 0.5317420014880953,
+      "singular_groups": 0.09450427827380951,
+      "regular_groups_dual": 0.5442382812500001,
+      "singular_groups_dual": 0.08890345982142857,
+      "estimated_embedding_rate": 0.021813459945235147,
+      "reliable": true
+     },
+     "hcf": {
+      "ratio": 1.6540249413845067,
+      "per_channel": [
+       2.1210093305670243,
+       0.9984089100337123,
+       1.8426565835527837
+      ]
+     }
+    }
+   }
+  },
+  "t14": {
+   "name": "t14",
+   "group": "smooth",
+   "capacity_bytes": 13412,
+   "sealed": true,
+   "recovered": true,
+   "received": "IMG_4341.JPG",
+   "pixel_rmse": 0.02245631368469802,
+   "bit_errors": 0,
+   "coded_bits": 3296,
+   "header_bit_errors": 0,
+   "psnr": 51.53295376133628,
+   "ssim": 0.9944025444312207,
+   "preshape_psnr": 42.50390564495377,
+   "preshape_ssim": 0.9748548620395624,
+   "plaintext_capacity_bytes": 13360,
+   "detectors": {
+    "covers": {
+     "chi_square": {
+      "mean_embedding_probability": 0.0030807785959016455,
+      "max_embedding_probability": 0.1971481227589164,
+      "flagged_block_fraction": 0.0
+     },
+     "rs": {
+      "regular_groups": 0.6501378038194444,
+      "singular_groups": 0.06749891493055554,
+      "regular_groups_dual": 0.6511197916666666,
+      "singular_groups_dual": 0.06708441840277778,
+      "estimated_embedding_rate": 0.0012488086794625157,
+      "reliable": true
+     },
+     "hcf": {
+      "ratio": 1.014862238582105,
+      "per_channel": [
+       1.0122944718010276,
+       1.0146696997368139,
+       1.0176225442084736
+      ]
+     }
+    },
+    "send": {
+     "chi_square": {
+      "mean_embedding_probability": 0.003653791112118541,
+      "max_embedding_probability": 0.23383363735560436,
+      "flagged_block_fraction": 0.0
+     },
+     "rs": {
+      "regular_groups": 0.6382747395833334,
+      "singular_groups": 0.070205078125,
+      "regular_groups_dual": 0.639187282986111,
+      "singular_groups_dual": 0.06989583333333334,
+      "estimated_embedding_rate": 0.0011268461933600128,
+      "reliable": true
+     },
+     "hcf": {
+      "ratio": 1.0239895209621077,
+      "per_channel": [
+       1.0264171470873575,
+       1.0224287711726339,
+       1.0231226446263313
+      ]
+     }
+    }
+   }
+  },
+  "t15": {
+   "name": "t15",
+   "group": "smooth",
+   "capacity_bytes": 10028,
+   "sealed": true,
+   "recovered": true,
+   "received": "IMG_4342.JPG",
+   "pixel_rmse": 0.44741452796926806,
+   "bit_errors": 0,
+   "coded_bits": 3296,
+   "header_bit_errors": 0,
+   "psnr": 50.57602414667052,
+   "ssim": 0.9931215639725597,
+   "preshape_psnr": 42.85366894806102,
+   "preshape_ssim": 0.9665154238708107,
+   "plaintext_capacity_bytes": 9976,
+   "detectors": {
+    "covers": {
+     "chi_square": {
+      "mean_embedding_probability": 1.4463877894867073e-13,
+      "max_embedding_probability": 9.252660420774106e-12,
+      "flagged_block_fraction": 0.0
+     },
+     "rs": {
+      "regular_groups": 0.5680960648148149,
+      "singular_groups": 0.09441261574074074,
+      "regular_groups_dual": 0.5691869212962963,
+      "singular_groups_dual": 0.09362413194444445,
+      "estimated_embedding_rate": 0.002139476837736868,
+      "reliable": true
+     },
+     "hcf": {
+      "ratio": 1.000011904338983,
+      "per_channel": [
+       0.9875019651603656,
+       0.983769424173225,
+       1.0287643236833584
+      ]
+     }
+    },
+    "send": {
+     "chi_square": {
+      "mean_embedding_probability": 1.5663816604213922e-10,
+      "max_embedding_probability": 1.0021022218393505e-08,
+      "flagged_block_fraction": 0.0
+     },
+     "rs": {
+      "regular_groups": 0.5585908564814815,
+      "singular_groups": 0.09688802083333332,
+      "regular_groups_dual": 0.5600260416666667,
+      "singular_groups_dual": 0.09636284722222221,
+      "estimated_embedding_rate": 0.002299296364990756,
+      "reliable": true
+     },
+     "hcf": {
+      "ratio": 0.9910334577554042,
+      "per_channel": [
+       0.9928646352731414,
+       0.9554808861870873,
+       1.0247548518059841
+      ]
+     }
+    }
+   }
+  },
+  "t16": {
+   "name": "t16",
+   "group": "textured",
+   "capacity_bytes": 13412,
+   "sealed": true,
+   "recovered": true,
+   "received": "IMG_4343.JPG",
+   "pixel_rmse": 0.5773852718680473,
+   "bit_errors": 2,
+   "coded_bits": 3296,
+   "header_bit_errors": 0,
+   "psnr": 52.120853118267235,
+   "ssim": 0.9979353402851985,
+   "preshape_psnr": 34.60501149518489,
+   "preshape_ssim": 0.9722109644575441,
+   "plaintext_capacity_bytes": 13360,
+   "detectors": {
+    "covers": {
+     "chi_square": {
+      "mean_embedding_probability": 0.08024917062989012,
+      "max_embedding_probability": 0.999931433048157,
+      "flagged_block_fraction": 0.078125
+     },
+     "rs": {
+      "regular_groups": 0.39628255208333335,
+      "singular_groups": 0.17220920138888887,
+      "regular_groups_dual": 0.4185579427083333,
+      "singular_groups_dual": 0.1608257378472222,
+      "estimated_embedding_rate": 0.07407372442365405,
+      "reliable": true
+     },
+     "hcf": {
+      "ratio": 1.807526336587081,
+      "per_channel": [
+       3.1665887325599353,
+       1.1126644358221236,
+       1.1433258413791842
+      ]
+     }
+    },
+    "send": {
+     "chi_square": {
+      "mean_embedding_probability": 0.08230303905124736,
+      "max_embedding_probability": 0.9999356986279448,
+      "flagged_block_fraction": 0.09375
+     },
+     "rs": {
+      "regular_groups": 0.3931770833333333,
+      "singular_groups": 0.17313910590277778,
+      "regular_groups_dual": 0.4161263020833334,
+      "singular_groups_dual": 0.16143880208333333,
+      "estimated_embedding_rate": 0.07745936219560678,
+      "reliable": true
+     },
+     "hcf": {
+      "ratio": 1.8519693791982172,
+      "per_channel": [
+       3.277944460809061,
+       1.1134686924788855,
+       1.1644949843067058
+      ]
+     }
+    }
+   }
+  },
+  "t17": {
+   "name": "t17",
+   "group": "textured",
+   "capacity_bytes": 13412,
+   "sealed": true,
+   "recovered": true,
+   "received": "IMG_4344.JPG",
+   "pixel_rmse": 0.24582836771114877,
+   "bit_errors": 0,
+   "coded_bits": 3296,
+   "header_bit_errors": 0,
+   "psnr": 52.23825219429514,
+   "ssim": 0.9981953355349885,
+   "preshape_psnr": 41.06410086279005,
+   "preshape_ssim": 0.9832294514826034,
+   "plaintext_capacity_bytes": 13360,
+   "detectors": {
+    "covers": {
+     "chi_square": {
+      "mean_embedding_probability": 0.03084178927920375,
+      "max_embedding_probability": 0.6429570522609147,
+      "flagged_block_fraction": 0.046875
+     },
+     "rs": {
+      "regular_groups": 0.2994704861111111,
+      "singular_groups": 0.11838433159722223,
+      "regular_groups_dual": 0.3089463975694445,
+      "singular_groups_dual": 0.11654839409722223,
+      "estimated_embedding_rate": 0.0334938095015056,
+      "reliable": true
+     },
+     "hcf": {
+      "ratio": 1.1747862906813487,
+      "per_channel": [
+       1.475389287439389,
+       0.8484759619340053,
+       1.2004936226706517
+      ]
+     }
+    },
+    "send": {
+     "chi_square": {
+      "mean_embedding_probability": 0.03231559903568897,
+      "max_embedding_probability": 0.938687525550891,
+      "flagged_block_fraction": 0.03125
+     },
+     "rs": {
+      "regular_groups": 0.29863932291666667,
+      "singular_groups": 0.11888780381944446,
+      "regular_groups_dual": 0.3081184895833333,
+      "singular_groups_dual": 0.11752278645833332,
+      "estimated_embedding_rate": 0.0323811655469368,
+      "reliable": true
+     },
+     "hcf": {
+      "ratio": 1.16305484418671,
+      "per_channel": [
+       1.4778881789337317,
+       0.8122375282536161,
+       1.199038825372782
+      ]
+     }
+    }
+   }
+  },
+  "t18": {
+   "name": "t18",
+   "group": "textured",
+   "capacity_bytes": 13412,
+   "sealed": true,
+   "recovered": true,
+   "received": "IMG_4345.JPG",
+   "pixel_rmse": 0.23246851918742556,
+   "bit_errors": 0,
+   "coded_bits": 3296,
+   "header_bit_errors": 0,
+   "psnr": 51.85735725512967,
+   "ssim": 0.9957855928154918,
+   "preshape_psnr": 38.16311187395914,
+   "preshape_ssim": 0.9221272500466625,
+   "plaintext_capacity_bytes": 13360,
+   "detectors": {
+    "covers": {
+     "chi_square": {
+      "mean_embedding_probability": 0.026215220968470433,
+      "max_embedding_probability": 0.8473821803417421,
+      "flagged_block_fraction": 0.015625
+     },
+     "rs": {
+      "regular_groups": 0.4730490451388889,
+      "singular_groups": 0.12902235243055554,
+      "regular_groups_dual": 0.48177300347222224,
+      "singular_groups_dual": 0.1261990017361111,
+      "estimated_embedding_rate": 0.01903733846317984,
+      "reliable": true
+     },
+     "hcf": {
+      "ratio": 1.2661403847495813,
+      "per_channel": [
+       1.4332674713464553,
+       0.8234243964277528,
+       1.5417292864745362
+      ]
+     }
+    },
+    "send": {
+     "chi_square": {
+      "mean_embedding_probability": 0.02534265057612404,
+      "max_embedding_probability": 0.8156593415366438,
+      "flagged_block_fraction": 0.015625
+     },
+     "rs": {
+      "regular_groups": 0.4690516493055556,
+      "singular_groups": 0.13023763020833334,
+      "regular_groups_dual": 0.47753038194444447,
+      "singular_groups_dual": 0.12801215277777778,
+      "estimated_embedding_rate": 0.017940237688580014,
+      "reliable": true
+     },
+     "hcf": {
+      "ratio": 1.2683161254281552,
+      "per_channel": [
+       1.4654169660378782,
+       0.7946624324563243,
+       1.544868977790263
+      ]
+     }
+    }
+   }
+  },
+  "t19": {
+   "name": "t19",
+   "group": "textured",
+   "capacity_bytes": 13412,
+   "sealed": true,
+   "recovered": true,
+   "received": "IMG_4346.JPG",
+   "pixel_rmse": 0.5117671865329053,
+   "bit_errors": 0,
+   "coded_bits": 3296,
+   "header_bit_errors": 0,
+   "psnr": 51.77238074741445,
+   "ssim": 0.9955516510665898,
+   "preshape_psnr": 38.29935780721292,
+   "preshape_ssim": 0.9549593088202951,
+   "plaintext_capacity_bytes": 13360,
+   "detectors": {
+    "covers": {
+     "chi_square": {
+      "mean_embedding_probability": 0.009613556714525212,
+      "max_embedding_probability": 0.6145406085664025,
+      "flagged_block_fraction": 0.015625
+     },
+     "rs": {
+      "regular_groups": 0.5622547743055556,
+      "singular_groups": 0.0958083767361111,
+      "regular_groups_dual": 0.5725607638888889,
+      "singular_groups_dual": 0.09145182291666666,
+      "estimated_embedding_rate": 0.016807754106271337,
+      "reliable": true
+     },
+     "hcf": {
+      "ratio": 1.1825691826545925,
+      "per_channel": [
+       1.3521232696634842,
+       1.0286283160404828,
+       1.1669559622598105
+      ]
+     }
+    },
+    "send": {
+     "chi_square": {
+      "mean_embedding_probability": 0.004456373515934532,
+      "max_embedding_probability": 0.2771015953292017,
+      "flagged_block_fraction": 0.0
+     },
+     "rs": {
+      "regular_groups": 0.5552647569444445,
+      "singular_groups": 0.09829318576388889,
+      "regular_groups_dual": 0.5655002170138889,
+      "singular_groups_dual": 0.09423828125,
+      "estimated_embedding_rate": 0.016778037574100717,
+      "reliable": true
+     },
+     "hcf": {
+      "ratio": 1.2025278290717232,
+      "per_channel": [
+       1.3805313822846519,
+       1.0561699325608886,
+       1.1708821723696288
+      ]
+     }
+    }
+   }
+  },
+  "t20": {
+   "name": "t20",
+   "group": "textured",
+   "capacity_bytes": 10028,
+   "sealed": true,
+   "recovered": true,
+   "received": "IMG_4347.JPG",
+   "pixel_rmse": 1.8943398803213551,
+   "bit_errors": 8,
+   "coded_bits": 3296,
+   "header_bit_errors": 1,
+   "psnr": 51.1526238375615,
+   "ssim": 0.9964843815248422,
+   "preshape_psnr": 40.8270613930996,
+   "preshape_ssim": 0.9735150222156058,
+   "plaintext_capacity_bytes": 9976,
+   "detectors": {
+    "covers": {
+     "chi_square": {
+      "mean_embedding_probability": 0.12264578113711909,
+      "max_embedding_probability": 0.9873795598750728,
+      "flagged_block_fraction": 0.125
+     },
+     "rs": {
+      "regular_groups": 0.4021209490740741,
+      "singular_groups": 0.15125434027777776,
+      "regular_groups_dual": 0.4234794560185185,
+      "singular_groups_dual": 0.1470920138888889,
+      "estimated_embedding_rate": 0.0516871983744141,
+      "reliable": true
+     },
+     "hcf": {
+      "ratio": 1.0318288781344749,
+      "per_channel": [
+       1.0407512968452792,
+       1.0200545769730063,
+       1.0346807605851391
+      ]
+     }
+    },
+    "send": {
+     "chi_square": {
+      "mean_embedding_probability": 0.13032346582085869,
+      "max_embedding_probability": 0.9889954571860906,
+      "flagged_block_fraction": 0.125
+     },
+     "rs": {
+      "regular_groups": 0.3991478587962963,
+      "singular_groups": 0.1519849537037037,
+      "regular_groups_dual": 0.4208521412037037,
+      "singular_groups_dual": 0.14797164351851852,
+      "estimated_embedding_rate": 0.05290492584615414,
+      "reliable": true
+     },
+     "hcf": {
+      "ratio": 1.029562712585496,
+      "per_channel": [
+       1.0435587179002386,
+       0.9917299913109057,
+       1.0533994285453436
+      ]
+     }
+    }
+   }
+  },
+  "t21": {
+   "name": "t21",
+   "group": "textured",
+   "capacity_bytes": 13412,
+   "sealed": true,
+   "recovered": true,
+   "received": "IMG_4348.JPG",
+   "pixel_rmse": 0.32873001431117876,
+   "bit_errors": 1,
+   "coded_bits": 3296,
+   "header_bit_errors": 1,
+   "psnr": 51.70083989414672,
+   "ssim": 0.9957723414081587,
+   "preshape_psnr": 35.99536577056519,
+   "preshape_ssim": 0.9745324336569936,
+   "plaintext_capacity_bytes": 13360,
+   "detectors": {
+    "covers": {
+     "chi_square": {
+      "mean_embedding_probability": 3.264864340401896e-06,
+      "max_embedding_probability": 0.0001794722645090264,
+      "flagged_block_fraction": 0.0
+     },
+     "rs": {
+      "regular_groups": 0.5852300347222222,
+      "singular_groups": 0.1326312934027778,
+      "regular_groups_dual": 0.5948036024305555,
+      "singular_groups_dual": 0.12593098958333335,
+      "estimated_embedding_rate": 0.01818225355862233,
+      "reliable": true
+     },
+     "hcf": {
+      "ratio": 1.1127856494235824,
+      "per_channel": [
+       1.0418752877683808,
+       1.0069580643975093,
+       1.2895235961048568
+      ]
+     }
+    },
+    "send": {
+     "chi_square": {
+      "mean_embedding_probability": 4.109403670278677e-08,
+      "max_embedding_probability": 1.961153502395986e-06,
+      "flagged_block_fraction": 0.0
+     },
+     "rs": {
+      "regular_groups": 0.5772135416666667,
+      "singular_groups": 0.1349685329861111,
+      "regular_groups_dual": 0.5868088107638889,
+      "singular_groups_dual": 0.12813151041666665,
+      "estimated_embedding_rate": 0.018884408752572992,
+      "reliable": true
+     },
+     "hcf": {
+      "ratio": 1.1280772737032532,
+      "per_channel": [
+       1.0494777455495023,
+       1.0018821720911717,
+       1.332871903469085
+      ]
+     }
+    }
+   }
+  },
+  "t22": {
+   "name": "t22",
+   "group": "textured",
+   "capacity_bytes": 13412,
+   "sealed": true,
+   "recovered": true,
+   "received": "IMG_4349.JPG",
+   "pixel_rmse": 0.2154997875176189,
+   "bit_errors": 0,
+   "coded_bits": 3296,
+   "header_bit_errors": 0,
+   "psnr": 52.01459349196115,
+   "ssim": 0.9966604060359785,
+   "preshape_psnr": 42.303448370903965,
+   "preshape_ssim": 0.9819309331364041,
+   "plaintext_capacity_bytes": 13360,
+   "detectors": {
+    "covers": {
+     "chi_square": {
+      "mean_embedding_probability": 0.00786243708956361,
+      "max_embedding_probability": 0.23599725176487354,
+      "flagged_block_fraction": 0.0
+     },
+     "rs": {
+      "regular_groups": 0.4242979600694445,
+      "singular_groups": 0.07894097222222222,
+      "regular_groups_dual": 0.43418945312499996,
+      "singular_groups_dual": 0.07596571180555556,
+      "estimated_embedding_rate": 0.020041107501189936,
+      "reliable": true
+     },
+     "hcf": {
+      "ratio": 1.0748494964490025,
+      "per_channel": [
+       1.0913343393242587,
+       1.0163917344099922,
+       1.1168224156127564
+      ]
+     }
+    },
+    "send": {
+     "chi_square": {
+      "mean_embedding_probability": 0.008480824236182249,
+      "max_embedding_probability": 0.26595681966845935,
+      "flagged_block_fraction": 0.0
+     },
+     "rs": {
+      "regular_groups": 0.42013997395833336,
+      "singular_groups": 0.080654296875,
+      "regular_groups_dual": 0.43002821180555556,
+      "singular_groups_dual": 0.07768120659722222,
+      "estimated_embedding_rate": 0.020403114195338086,
+      "reliable": true
+     },
+     "hcf": {
+      "ratio": 1.08199805326931,
+      "per_channel": [
+       1.1025290320666286,
+       1.027310319700289,
+       1.1161548080410129
+      ]
+     }
+    }
+   }
+  },
+  "t23": {
+   "name": "t23",
+   "group": "textured",
+   "capacity_bytes": 13412,
+   "sealed": true,
+   "recovered": true,
+   "received": "IMG_4350.JPG",
+   "pixel_rmse": 0.1328574270416934,
+   "bit_errors": 0,
+   "coded_bits": 3296,
+   "header_bit_errors": 0,
+   "psnr": 51.94013086665447,
+   "ssim": 0.9960246996706943,
+   "preshape_psnr": 40.00960884821794,
+   "preshape_ssim": 0.9733085098431177,
+   "plaintext_capacity_bytes": 13360,
+   "detectors": {
+    "covers": {
+     "chi_square": {
+      "mean_embedding_probability": 0.011198645668985593,
+      "max_embedding_probability": 0.39431037035861694,
+      "flagged_block_fraction": 0.0
+     },
+     "rs": {
+      "regular_groups": 0.5168815104166667,
+      "singular_groups": 0.08715494791666667,
+      "regular_groups_dual": 0.5231651475694444,
+      "singular_groups_dual": 0.0856423611111111,
+      "estimated_embedding_rate": 0.009965008224030715,
+      "reliable": true
+     },
+     "hcf": {
+      "ratio": 1.0849646516967317,
+      "per_channel": [
+       1.0206864518726457,
+       1.0259300154794075,
+       1.2082774877381417
+      ]
+     }
+    },
+    "send": {
+     "chi_square": {
+      "mean_embedding_probability": 0.01404503732004427,
+      "max_embedding_probability": 0.5090845597210152,
+      "flagged_block_fraction": 0.015625
+     },
+     "rs": {
+      "regular_groups": 0.5092632378472222,
+      "singular_groups": 0.08964409722222222,
+      "regular_groups_dual": 0.5159950086805556,
+      "singular_groups_dual": 0.08778862847222223,
+      "estimated_embedding_rate": 0.01124827241181912,
+      "reliable": true
+     },
+     "hcf": {
+      "ratio": 1.0759839361626504,
+      "per_channel": [
+       0.9491500784557283,
+       1.067380739493701,
+       1.2114209905385218
+      ]
+     }
+    }
+   }
+  },
+  "t24": {
+   "name": "t24",
+   "group": "textured",
+   "capacity_bytes": 17924,
+   "sealed": true,
+   "recovered": true,
+   "received": "IMG_4351.JPG",
+   "pixel_rmse": 0.0658292951029403,
+   "bit_errors": 12,
+   "coded_bits": 3296,
+   "header_bit_errors": 0,
+   "psnr": 53.40403172727933,
+   "ssim": 0.99709757091318,
+   "preshape_psnr": 38.98943886638783,
+   "preshape_ssim": 0.9572326583038808,
+   "plaintext_capacity_bytes": 17872,
+   "detectors": {
+    "covers": {
+     "chi_square": {
+      "mean_embedding_probability": 1.5535468423131177e-13,
+      "max_embedding_probability": 7.494909452234826e-12,
+      "flagged_block_fraction": 0.0
+     },
+     "rs": {
+      "regular_groups": 0.51130615234375,
+      "singular_groups": 0.10151123046875,
+      "regular_groups_dual": 0.51302001953125,
+      "singular_groups_dual": 0.10012939453124999,
+      "estimated_embedding_rate": 0.004271461993734604,
+      "reliable": true
+     },
+     "hcf": {
+      "ratio": 0.998030190645593,
+      "per_channel": [
+       0.998030190645593,
+       0.998030190645593,
+       0.998030190645593
+      ]
+     }
+    },
+    "send": {
+     "chi_square": {
+      "mean_embedding_probability": 1.641224681915178e-13,
+      "max_embedding_probability": 1.0282156830350426e-11,
+      "flagged_block_fraction": 0.0
+     },
+     "rs": {
+      "regular_groups": 0.5062646484375,
+      "singular_groups": 0.10275146484375001,
+      "regular_groups_dual": 0.509658203125,
+      "singular_groups_dual": 0.10123779296875,
+      "estimated_embedding_rate": 0.006858452718713946,
+      "reliable": true
+     },
+     "hcf": {
+      "ratio": 0.992130694330776,
+      "per_channel": [
+       0.9921306943307762,
+       0.9921306943307762,
+       0.9921306943307762
+      ]
+     }
+    }
+   }
+  },
+  "t25": {
+   "name": "t25",
+   "group": "textured",
+   "capacity_bytes": 13412,
+   "sealed": true,
+   "recovered": true,
+   "received": "IMG_4352.JPG",
+   "pixel_rmse": 0.5000227859391343,
+   "bit_errors": 0,
+   "coded_bits": 3296,
+   "header_bit_errors": 0,
+   "psnr": 52.083862914583534,
+   "ssim": 0.9976473803409155,
+   "preshape_psnr": 35.438490933009724,
+   "preshape_ssim": 0.9571184294021614,
+   "plaintext_capacity_bytes": 13360,
+   "detectors": {
+    "covers": {
+     "chi_square": {
+      "mean_embedding_probability": 0.004494739672242789,
+      "max_embedding_probability": 0.21256157097387893,
+      "flagged_block_fraction": 0.0
+     },
+     "rs": {
+      "regular_groups": 0.39696940104166667,
+      "singular_groups": 0.1989225260416667,
+      "regular_groups_dual": 0.4138107638888889,
+      "singular_groups_dual": 0.19083116319444446,
+      "estimated_embedding_rate": 0.06620541970145322,
+      "reliable": true
+     },
+     "hcf": {
+      "ratio": 1.5039473102731131,
+      "per_channel": [
+       1.4525937419170534,
+       0.8608779764290034,
+       2.1983702124732827
+      ]
+     }
+    },
+    "send": {
+     "chi_square": {
+      "mean_embedding_probability": 0.005336388573277077,
+      "max_embedding_probability": 0.21247175022798026,
+      "flagged_block_fraction": 0.0
+     },
+     "rs": {
+      "regular_groups": 0.39541449652777777,
+      "singular_groups": 0.19950954861111111,
+      "regular_groups_dual": 0.4115733506944444,
+      "singular_groups_dual": 0.1920551215277778,
+      "estimated_embedding_rate": 0.06356908276057086,
+      "reliable": true
+     },
+     "hcf": {
+      "ratio": 1.5224869593309824,
+      "per_channel": [
+       1.4533001231226728,
+       0.8785055350878994,
+       2.235655219782375
+      ]
+     }
+    }
+   }
+  },
+  "t26": {
+   "name": "t26",
+   "group": "textured",
+   "capacity_bytes": 17924,
+   "sealed": true,
+   "recovered": true,
+   "received": "IMG_4353.JPG",
+   "pixel_rmse": 0.5812841261823365,
+   "bit_errors": 18,
+   "coded_bits": 3296,
+   "header_bit_errors": 0,
+   "psnr": 53.22612868760099,
+   "ssim": 0.9965614319986155,
+   "preshape_psnr": 37.54153931116876,
+   "preshape_ssim": 0.9466021901373897,
+   "plaintext_capacity_bytes": 17872,
+   "detectors": {
+    "covers": {
+     "chi_square": {
+      "mean_embedding_probability": 0.011994893079851129,
+      "max_embedding_probability": 0.41854915334765797,
+      "flagged_block_fraction": 0.0
+     },
+     "rs": {
+      "regular_groups": 0.54721435546875,
+      "singular_groups": 0.11154378255208335,
+      "regular_groups_dual": 0.5707633463541667,
+      "singular_groups_dual": 0.10533284505208333,
+      "estimated_embedding_rate": 0.03570790499290671,
+      "reliable": true
+     },
+     "hcf": {
+      "ratio": 1.0394190841198634,
+      "per_channel": [
+       1.0154704762008477,
+       1.0523501933214086,
+       1.0504365828373332
+      ]
+     }
+    },
+    "send": {
+     "chi_square": {
+      "mean_embedding_probability": 0.014395957562490281,
+      "max_embedding_probability": 0.5750985649355669,
+      "flagged_block_fraction": 0.015625
+     },
+     "rs": {
+      "regular_groups": 0.5408512369791667,
+      "singular_groups": 0.11320231119791668,
+      "regular_groups_dual": 0.5648063151041667,
+      "singular_groups_dual": 0.10674072265625001,
+      "estimated_embedding_rate": 0.03719818805008919,
+      "reliable": true
+     },
+     "hcf": {
+      "ratio": 1.0426307989095243,
+      "per_channel": [
+       1.0188850448498752,
+       1.0565074504717702,
+       1.0524999014069276
+      ]
+     }
+    }
+   }
+  },
+  "t27": {
+   "name": "t27",
+   "group": "textured",
+   "capacity_bytes": 13412,
+   "sealed": true,
+   "recovered": true,
+   "received": "IMG_4354.JPG",
+   "pixel_rmse": 0.5759406462806688,
+   "bit_errors": 20,
+   "coded_bits": 3296,
+   "header_bit_errors": 1,
+   "psnr": 52.02471790585179,
+   "ssim": 0.9959450952096306,
+   "preshape_psnr": 41.543027940233024,
+   "preshape_ssim": 0.9696473555654491,
+   "plaintext_capacity_bytes": 13360,
+   "detectors": {
+    "covers": {
+     "chi_square": {
+      "mean_embedding_probability": 0.010203537883958176,
+      "max_embedding_probability": 0.6524163399655796,
+      "flagged_block_fraction": 0.015625
+     },
+     "rs": {
+      "regular_groups": 0.4469954427083333,
+      "singular_groups": 0.07254340277777778,
+      "regular_groups_dual": 0.46279839409722223,
+      "singular_groups_dual": 0.0703125,
+      "estimated_embedding_rate": 0.026576171582880764,
+      "reliable": true
+     },
+     "hcf": {
+      "ratio": 0.9731499501751119,
+      "per_channel": [
+       0.9529167282604625,
+       0.9689902228381454,
+       0.997542899426728
+      ]
+     }
+    },
+    "send": {
+     "chi_square": {
+      "mean_embedding_probability": 0.008158965042919568,
+      "max_embedding_probability": 0.5216327351379364,
+      "flagged_block_fraction": 0.015625
+     },
+     "rs": {
+      "regular_groups": 0.44301649305555557,
+      "singular_groups": 0.07439127604166666,
+      "regular_groups_dual": 0.45892578125,
+      "singular_groups_dual": 0.07225911458333334,
+      "estimated_embedding_rate": 0.026978636013477657,
+      "reliable": true
+     },
+     "hcf": {
+      "ratio": 0.978229918527956,
+      "per_channel": [
+       0.9557662770371796,
+       0.9719273986600632,
+       1.0069960798866253
+      ]
+     }
+    }
+   }
+  },
+  "t28": {
+   "name": "t28",
+   "group": "textured",
+   "capacity_bytes": 13412,
+   "sealed": true,
+   "recovered": true,
+   "received": "IMG_4355.JPG",
+   "pixel_rmse": 0.23569765679078497,
+   "bit_errors": 0,
+   "coded_bits": 3296,
+   "header_bit_errors": 0,
+   "psnr": 51.718113955175305,
+   "ssim": 0.9955406119985983,
+   "preshape_psnr": 40.43608542891039,
+   "preshape_ssim": 0.9704387820893201,
+   "plaintext_capacity_bytes": 13360,
+   "detectors": {
+    "covers": {
+     "chi_square": {
+      "mean_embedding_probability": 0.00480820239518268,
+      "max_embedding_probability": 0.15382224040515474,
+      "flagged_block_fraction": 0.0
+     },
+     "rs": {
+      "regular_groups": 0.450380859375,
+      "singular_groups": 0.09154188368055555,
+      "regular_groups_dual": 0.45904405381944446,
+      "singular_groups_dual": 0.08728949652777777,
+      "estimated_embedding_rate": 0.02066518898415064,
+      "reliable": true
+     },
+     "hcf": {
+      "ratio": 1.6966719281600282,
+      "per_channel": [
+       2.3839534341994666,
+       1.5954928200746636,
+       1.1105695302059548
+      ]
+     }
+    },
+    "send": {
+     "chi_square": {
+      "mean_embedding_probability": 0.017543216776139278,
+      "max_embedding_probability": 0.6338720901364862,
+      "flagged_block_fraction": 0.015625
+     },
+     "rs": {
+      "regular_groups": 0.44593858506944445,
+      "singular_groups": 0.09316731770833332,
+      "regular_groups_dual": 0.4548676215277778,
+      "singular_groups_dual": 0.08904730902777779,
+      "estimated_embedding_rate": 0.02122416265696707,
+      "reliable": true
+     },
+     "hcf": {
+      "ratio": 1.7562372971643871,
+      "per_channel": [
+       2.5043105906251446,
+       1.6592000542203784,
+       1.105201246647638
+      ]
+     }
+    }
+   }
+  },
+  "t29": {
+   "name": "t29",
+   "group": "textured",
+   "capacity_bytes": 13412,
+   "sealed": true,
+   "recovered": true,
+   "received": "IMG_4356.JPG",
+   "pixel_rmse": 0.024705294220065465,
+   "bit_errors": 0,
+   "coded_bits": 3296,
+   "header_bit_errors": 0,
+   "psnr": 51.75860429276657,
+   "ssim": 0.9953432678075643,
+   "preshape_psnr": 39.50380225431796,
+   "preshape_ssim": 0.9321568431674426,
+   "plaintext_capacity_bytes": 13360,
+   "detectors": {
+    "covers": {
+     "chi_square": {
+      "mean_embedding_probability": 2.1326164728192046e-13,
+      "max_embedding_probability": 8.297373633985677e-12,
+      "flagged_block_fraction": 0.0
+     },
+     "rs": {
+      "regular_groups": 0.4705794270833333,
+      "singular_groups": 0.14690104166666668,
+      "regular_groups_dual": 0.4683203125,
+      "singular_groups_dual": 0.14798502604166666,
+      "estimated_embedding_rate": 0.0,
+      "reliable": true
+     },
+     "hcf": {
+      "ratio": 0.8447739248008852,
+      "per_channel": [
+       0.8447739248008852,
+       0.8447739248008852,
+       0.8447739248008852
+      ]
+     }
+    },
+    "send": {
+     "chi_square": {
+      "mean_embedding_probability": 1.991119476364265e-12,
+      "max_embedding_probability": 5.2459133053807074e-11,
+      "flagged_block_fraction": 0.0
+     },
+     "rs": {
+      "regular_groups": 0.4668359375,
+      "singular_groups": 0.1476953125,
+      "regular_groups_dual": 0.46386067708333334,
+      "singular_groups_dual": 0.14898763020833333,
+      "estimated_embedding_rate": 0.0,
+      "reliable": true
+     },
+     "hcf": {
+      "ratio": 0.8380047823605395,
+      "per_channel": [
+       0.8380047823605395,
+       0.8380047823605395,
+       0.8380047823605395
+      ]
+     }
+    }
+   }
+  },
+  "t30": {
+   "name": "t30",
+   "group": "textured",
+   "capacity_bytes": 13412,
+   "sealed": true,
+   "recovered": true,
+   "received": "IMG_4357.JPG",
+   "pixel_rmse": 0.2128819840881458,
+   "bit_errors": 0,
+   "coded_bits": 3296,
+   "header_bit_errors": 0,
+   "psnr": 51.85115292213651,
+   "ssim": 0.9959750984488212,
+   "preshape_psnr": 37.200298762215176,
+   "preshape_ssim": 0.9555752641250094,
+   "plaintext_capacity_bytes": 13360,
+   "detectors": {
+    "covers": {
+     "chi_square": {
+      "mean_embedding_probability": 0.10700601476932431,
+      "max_embedding_probability": 0.9986443218320281,
+      "flagged_block_fraction": 0.109375
+     },
+     "rs": {
+      "regular_groups": 0.5448057725694445,
+      "singular_groups": 0.13565104166666667,
+      "regular_groups_dual": 0.5496625434027776,
+      "singular_groups_dual": 0.13210611979166667,
+      "estimated_embedding_rate": 0.010701432285278376,
+      "reliable": true
+     },
+     "hcf": {
+      "ratio": 1.0028731736342877,
+      "per_channel": [
+       0.9993917880980034,
+       1.0027021967048058,
+       1.0065255361000536
+      ]
+     }
+    },
+    "send": {
+     "chi_square": {
+      "mean_embedding_probability": 0.1088444197260077,
+      "max_embedding_probability": 0.9991286909082565,
+      "flagged_block_fraction": 0.109375
+     },
+     "rs": {
+      "regular_groups": 0.53673828125,
+      "singular_groups": 0.13707356770833334,
+      "regular_groups_dual": 0.5412717013888889,
+      "singular_groups_dual": 0.13393880208333334,
+      "estimated_embedding_rate": 0.010055145455560003,
+      "reliable": true
+     },
+     "hcf": {
+      "ratio": 1.002123189513352,
+      "per_channel": [
+       0.9984556430007735,
+       1.0020147178065968,
+       1.005899207732686
+      ]
+     }
+    }
+   }
+  }
+ }
+}

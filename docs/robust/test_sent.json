@@ -1,0 +1,245 @@
+{
+ "draw_sha1": "725c1cb0de2237cdea72102c951bb29314759b6a",
+ "files": [
+  {
+   "name": "t01",
+   "cover": "00fde4088e487d8d614138f3ab948f960d6bceb8",
+   "group": "smooth",
+   "capacity_bytes": 13412,
+   "sealed": true,
+   "sha1": "c755cfea68d567d5275ebb55e4822961f065057e"
+  },
+  {
+   "name": "t02",
+   "cover": "3404d94c0baa25f4e6a5b323273bd7c92aa13072",
+   "group": "smooth",
+   "capacity_bytes": 10028,
+   "sealed": true,
+   "sha1": "23287a7ff956bc2dc952b9c08dba6bd59bd5f6d7"
+  },
+  {
+   "name": "t03",
+   "cover": "38c4f8690ebdc70fdbd9dfa19c1fe267150aaa58",
+   "group": "smooth",
+   "capacity_bytes": 14310,
+   "sealed": true,
+   "sha1": "60b427e5ea32b4d11de10edd592a8f347569615c"
+  },
+  {
+   "name": "t04",
+   "cover": "39ae1297e468575c7c52df5cc12ffb42e3076805",
+   "group": "smooth",
+   "capacity_bytes": 13412,
+   "sealed": true,
+   "sha1": "a6b20b82e37f16b5389e6c17c89daf22a2b86883"
+  },
+  {
+   "name": "t05",
+   "cover": "4fdc328b1622e1d542bda248132c2f762250e4d1",
+   "group": "smooth",
+   "capacity_bytes": 13412,
+   "sealed": true,
+   "sha1": "2b88a58345528916b1feb486b6a4697ebecc798d"
+  },
+  {
+   "name": "t06",
+   "cover": "53e632f9d1a25bcb2cb42f9cb326b39ac9f5e43c",
+   "group": "smooth",
+   "capacity_bytes": 10028,
+   "sealed": true,
+   "sha1": "2be8c495a1aa15d235922112b84c031c4d7dfd21"
+  },
+  {
+   "name": "t07",
+   "cover": "6146ce25384a455478c54a8db2b0da2fbf50fa4a",
+   "group": "smooth",
+   "capacity_bytes": 17924,
+   "sealed": true,
+   "sha1": "bb6a827d2674bcc485b3b61f947fcf8eaf36682e"
+  },
+  {
+   "name": "t08",
+   "cover": "8b47030268f7eb7b4de30ddea9fdc9c1a8c45a69",
+   "group": "smooth",
+   "capacity_bytes": 10028,
+   "sealed": true,
+   "sha1": "f03d3d866d738f7d8ffaf90e104b080f2f033cf0"
+  },
+  {
+   "name": "t09",
+   "cover": "97be9ee67a41f2d51e9346e12a011d68f04b50a2",
+   "group": "smooth",
+   "capacity_bytes": 13412,
+   "sealed": true,
+   "sha1": "da0bb14f8596a32933c9566f7c2d24d14d140133"
+  },
+  {
+   "name": "t10",
+   "cover": "9d1da53cfda21403beb67b39363cec778f05606d",
+   "group": "smooth",
+   "capacity_bytes": 17924,
+   "sealed": true,
+   "sha1": "13782f707c8516631048077a88207dc994dc1139"
+  },
+  {
+   "name": "t11",
+   "cover": "9fb4331f2bf6b1e6e722b3cb1c295dd683438861",
+   "group": "smooth",
+   "capacity_bytes": 13412,
+   "sealed": true,
+   "sha1": "08b04f100c5bd0db8e80bb0f7f42a6b1c584d7aa"
+  },
+  {
+   "name": "t12",
+   "cover": "ae936f578c13d70e9f9f84ef080e1a6bbae5aa85",
+   "group": "smooth",
+   "capacity_bytes": 10028,
+   "sealed": true,
+   "sha1": "0c426fd3cf27cbad88700d5c276f64bc63d598eb"
+  },
+  {
+   "name": "t13",
+   "cover": "cfe31f1bf061c7eb597167479851ba89fa06162d",
+   "group": "smooth",
+   "capacity_bytes": 15668,
+   "sealed": true,
+   "sha1": "153d18aa37c8e556fea8a9adf42a6a207d21a42b"
+  },
+  {
+   "name": "t14",
+   "cover": "d93c247ee3ec470c301e20d8e8a5b2784b46c972",
+   "group": "smooth",
+   "capacity_bytes": 13412,
+   "sealed": true,
+   "sha1": "db46feae403df720282f146273916486a31972f4"
+  },
+  {
+   "name": "t15",
+   "cover": "eb62d4222fc300d34033aae195c3bc5e1dbff8dd",
+   "group": "smooth",
+   "capacity_bytes": 10028,
+   "sealed": true,
+   "sha1": "4578571a2825bd443e203bcc17dc7898f18faf42"
+  },
+  {
+   "name": "t16",
+   "cover": "31f0bfb21f663fcd4f16a302ffa0f5e11d4c1f00",
+   "group": "textured",
+   "capacity_bytes": 13412,
+   "sealed": true,
+   "sha1": "293ae39cc815431c67a27c4623e36c8e706a87ae"
+  },
+  {
+   "name": "t17",
+   "cover": "41495c6e67522a75bd120a5ef2457ee0974331a3",
+   "group": "textured",
+   "capacity_bytes": 13412,
+   "sealed": true,
+   "sha1": "9f2792ba9b03c63575d7f698de2ab25c4a4aa14e"
+  },
+  {
+   "name": "t18",
+   "cover": "45ac1536f0839181ad4ff4a0eeb59c3ba00bde22",
+   "group": "textured",
+   "capacity_bytes": 13412,
+   "sealed": true,
+   "sha1": "efd117e91fb3d0e4d7a5d560b435f3db6720611a"
+  },
+  {
+   "name": "t19",
+   "cover": "5fc0db0fdb41f59b27bb6001c89f0754bce5a3e5",
+   "group": "textured",
+   "capacity_bytes": 13412,
+   "sealed": true,
+   "sha1": "aa781028748c51dfce93e628d61b20d5e07e3760"
+  },
+  {
+   "name": "t20",
+   "cover": "65a977e94646128c5d24a2c8cb40c1efa26f07c7",
+   "group": "textured",
+   "capacity_bytes": 10028,
+   "sealed": true,
+   "sha1": "c469aa95fe33cbddb25b10a7fc6cafc8eb949b13"
+  },
+  {
+   "name": "t21",
+   "cover": "735caf0470139170323ad0b4fa9bb8a0d671292a",
+   "group": "textured",
+   "capacity_bytes": 13412,
+   "sealed": true,
+   "sha1": "03ce6ee1481fee8829ad413a9667760d86c424cf"
+  },
+  {
+   "name": "t22",
+   "cover": "757294f57c57828ec86e11fc825f5f5ac6325dca",
+   "group": "textured",
+   "capacity_bytes": 13412,
+   "sealed": true,
+   "sha1": "40b089e453baa82d3ccb4a67038d9821726513c0"
+  },
+  {
+   "name": "t23",
+   "cover": "7d6ca55e671fb392dead0922153e5466a5e48d20",
+   "group": "textured",
+   "capacity_bytes": 13412,
+   "sealed": true,
+   "sha1": "bff862b4e6fc4f5ce724533fa76fc12d86e9f468"
+  },
+  {
+   "name": "t24",
+   "cover": "8c94caf918e6660ad9db008308b852269e158556",
+   "group": "textured",
+   "capacity_bytes": 17924,
+   "sealed": true,
+   "sha1": "6ff078f40924d802cdcba87bd4493e73fc2cfb69"
+  },
+  {
+   "name": "t25",
+   "cover": "9725dc59b781c6cffc9228aa45fa6811fb7bb0bc",
+   "group": "textured",
+   "capacity_bytes": 13412,
+   "sealed": true,
+   "sha1": "50b6a3887a511308cedba3a2b4cd29880e2f9578"
+  },
+  {
+   "name": "t26",
+   "cover": "a5b6412b800a4477570c8e0c530c3d18638fb0ae",
+   "group": "textured",
+   "capacity_bytes": 17924,
+   "sealed": true,
+   "sha1": "b2b24fa1aabeb6b81b3b1c27ee97aa47c8c205da"
+  },
+  {
+   "name": "t27",
+   "cover": "d0447dd5f0ebd2c79d9eeb28c73285aeaa20f668",
+   "group": "textured",
+   "capacity_bytes": 13412,
+   "sealed": true,
+   "sha1": "18e2d5df0e928ac586f699a8d1b6071d0136eeb7"
+  },
+  {
+   "name": "t28",
+   "cover": "d7bae8dcc84664ae4efe1977591c0a5ba3a40e96",
+   "group": "textured",
+   "capacity_bytes": 13412,
+   "sealed": true,
+   "sha1": "c7f7331043dd1ccbc271fa50ede19a0f0bfe6930"
+  },
+  {
+   "name": "t29",
+   "cover": "e7f8e7c7e6580f6e4c395594ae30586dc4704ca3",
+   "group": "textured",
+   "capacity_bytes": 13412,
+   "sealed": true,
+   "sha1": "b08a01700e0e841c4b748ca584142a6586ad7f45"
+  },
+  {
+   "name": "t30",
+   "cover": "ea8273430d8a41b3f7e73f5c37bf657fb46ee397",
+   "group": "textured",
+   "capacity_bytes": 13412,
+   "sealed": true,
+   "sha1": "9e0474188d4d575f4e7be6ff4631f2e21831be06"
+  }
+ ]
+}
