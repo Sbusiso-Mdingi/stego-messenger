@@ -131,4 +131,95 @@ project stays Apache-2.0.
 
 ## Amendments
 
-None yet.
+### Amendment 1: freeze (24 November 2026)
+
+**Development result.** Of the 48 candidates, three recovered all 50 simulated trials within the quality
+budget, in selection order (14, 2, 127), (9, 6, 159), (9, 6, 127). Results: `docs/robust/dev_simulation.json`.
+
+**Real confirmations** (iPhone 16 Pro, iOS 27.0.1, WhatsApp 2.26.45.75, the route in "The channel";
+`docs/robust/confirmations.json`):
+
+1. (14, 2, 127): **0 of 10** recovered. For these inputs WhatsApp re-encoded with a finer, non-standard luma
+   table (first row 4, 5, 9, 9), not the standard quality-75 table it used for the PNG inputs, and with `k` = 2
+   a shift of half a step flips a bit. The repeat send gave a byte-identical file, and photos AirDropped
+   straight from WhatsApp were identical in pixels to those saved to Photos first.
+2. (9, 6, 159): **10 of 10** recovered, standard quality-75 table, repeat send byte-identical.
+
+**Chosen configuration: `Z` = 9, `k` = 6, `m` = 159.** 22 of the 33 allowed real sends were used.
+
+**What the confirmations change in the claim.** The channel's quantisation table depends on the input image, so
+the simulated channel is not the real one. The test result stands for the route and versions above only.
+
+**Clarifications of the method, as implemented (not changes):** at a QIM tie where both values are equally
+near zero, the positive one is taken; extraction rescales each coefficient by the received luma table over the
+quality-75 table before rounding, half toward zero; `sips` copies the Exif orientation tag without rotating, so
+orientation is applied afterwards for HEIC, JPEG and PNG alike; all pool files go through `sips`.
+
+**Code and dependencies.** Commit `c6d45ad` (`src/robust.py`, `src/robust_pool.py`, `src/robust_test.py`).
+Python 3.12.7, macOS 27.0.1, lock `docs/robust/requirements-lock.txt` (SHA-1 `5c1f59d09923f372ae35da8ab6be785dbfc2154a`), jpeglib 1.0.2 with
+libjpeg 6b, reedsolo 1.7.0. Both scripts were reviewed before the freeze; the pool review found that a missing
+camera model (printed by `sips` as `<nil>`) was read as present, so a first draw was discarded and redone
+before any test cover was sealed (`data/test_pool/draw_discarded_nil_bug.json`, kept).
+
+**Pool.** 71 files received from the user's iPhone (`data/test_pool/pool_received.sha1`, SHA-1 `fd3eeaf7cf57050cab8bb59c9af4ea96f6926a18`).
+18 excluded, 53 eligible, median mean luma gradient 4.3106, 26 smooth and 27 textured.
+Draw file SHA-1 `725c1cb0de2237cdea72102c951bb29314759b6a`. Excluded:
+
+  - `1405b328828522d3e4256115858bdd75a66357a7`: no camera model
+  - `25eab290ee508d2e2d33390dfb080954af2b5db0`: no camera model
+  - `2f25bd0171c06e6c09cbe2d1a3b7ce2c5a10c33e`: no camera model
+  - `37a3848dad5ea6ea23aa29a7eb84466fb6fd29fe`: no camera model
+  - `6e33967a1a0903cf25965bc9c7a26712cfca6dbe`: no camera model
+  - `6ec593884c7a7f32415807d4295da6add85f36ea`: no camera model
+  - `6f25c1730bed20f1cd0e0b2532f71823244ebf10`: no camera model
+  - `76fa0f9307991b6f06dd63dbccfcbb31ae4a5e30`: no camera model
+  - `7d4e6821d8a1d24b2df86147d74fd6d7debd6592`: no camera model
+  - `7eee0a9d2bda1802ac1da2fb1eb06386be9680dc`: no camera model
+  - `7eee34f4fc041984080aa4808eccf271e5151c21`: no camera model
+  - `85de30ab47c0a6ef8d338332ff9a91dea309f1f8`: no camera model
+  - `9aed987987d03da6fc4cd6456c7aac1bc377187e`: near-duplicate of ` 38819a0897e08241463c3f848a046b2a56780ac5`
+  - `b014741951f3e04001b5c98d6b2f3fdfac9c6ca5`: no camera model
+  - `ba4e2d73d7f9df6e2b55390a94d8bcc7d4282769`: no camera model
+  - `c90c1fa49a42bddf2828e2d1661264c6525b3e6b`: near-duplicate of ` 9725dc59b781c6cffc9228aa45fa6811fb7bb0bc`
+  - `d1e42424e6866e523d11afa38034b5de20301073`: no camera model
+  - `e7732da5fc7be27cb995d133aaa3d8ab18704b41`: no camera model
+
+**Drawn covers, smooth:**
+
+  - `00fde4088e487d8d614138f3ab948f960d6bceb8`
+  - `3404d94c0baa25f4e6a5b323273bd7c92aa13072`
+  - `38c4f8690ebdc70fdbd9dfa19c1fe267150aaa58`
+  - `39ae1297e468575c7c52df5cc12ffb42e3076805`
+  - `4fdc328b1622e1d542bda248132c2f762250e4d1`
+  - `53e632f9d1a25bcb2cb42f9cb326b39ac9f5e43c`
+  - `6146ce25384a455478c54a8db2b0da2fbf50fa4a`
+  - `8b47030268f7eb7b4de30ddea9fdc9c1a8c45a69`
+  - `97be9ee67a41f2d51e9346e12a011d68f04b50a2`
+  - `9d1da53cfda21403beb67b39363cec778f05606d`
+  - `9fb4331f2bf6b1e6e722b3cb1c295dd683438861`
+  - `ae936f578c13d70e9f9f84ef080e1a6bbae5aa85`
+  - `cfe31f1bf061c7eb597167479851ba89fa06162d`
+  - `d93c247ee3ec470c301e20d8e8a5b2784b46c972`
+  - `eb62d4222fc300d34033aae195c3bc5e1dbff8dd`
+
+**Drawn covers, textured:**
+
+  - `31f0bfb21f663fcd4f16a302ffa0f5e11d4c1f00`
+  - `41495c6e67522a75bd120a5ef2457ee0974331a3`
+  - `45ac1536f0839181ad4ff4a0eeb59c3ba00bde22`
+  - `5fc0db0fdb41f59b27bb6001c89f0754bce5a3e5`
+  - `65a977e94646128c5d24a2c8cb40c1efa26f07c7`
+  - `735caf0470139170323ad0b4fa9bb8a0d671292a`
+  - `757294f57c57828ec86e11fc825f5f5ac6325dca`
+  - `7d6ca55e671fb392dead0922153e5466a5e48d20`
+  - `8c94caf918e6660ad9db008308b852269e158556`
+  - `9725dc59b781c6cffc9228aa45fa6811fb7bb0bc`
+  - `a5b6412b800a4477570c8e0c530c3d18638fb0ae`
+  - `d0447dd5f0ebd2c79d9eeb28c73285aeaa20f668`
+  - `d7bae8dcc84664ae4efe1977591c0a5ba3a40e96`
+  - `e7f8e7c7e6580f6e4c395594ae30586dc4704ca3`
+  - `ea8273430d8a41b3f7e73f5c37bf657fb46ee397`
+
+**Test passwords and messages:** one generator, `numpy.random.default_rng(20261201)`, cover by cover in the
+order smooth then textured, each sorted by SHA-1: 16 characters from letters and digits, then 140 characters
+from lowercase letters and space (`src/robust_test.py`, `plan`).
